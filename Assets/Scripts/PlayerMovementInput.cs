@@ -17,6 +17,7 @@ public class PlayerMovementInput : MonoBehaviour, PlayerInputActions.IPlayerLoco
         if (_inputActions != null)
         {
             _inputActions.Enable();
+            _inputActions.PlayerLocomotionMap.SetCallbacks(this);
         }
         else
         {
