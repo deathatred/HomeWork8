@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player2DMovement : MonoBehaviour
 {
@@ -8,20 +10,20 @@ public class Player2DMovement : MonoBehaviour
 
     private PlayerMovementInput _playerMovementInput;
     private Rigidbody2D _playerRb;
+    private PlayerState _playerState;
 
     private float _moveSpeed = 7f;
     private float _jumpForce = 20f;
 
     private bool _isGrounded;
     private float _groundCheckDistance = 0.2f;
-    private float _groundCheckRadius = 0.2f;
+    private float _groundCheckRadius = 0.5f;
 
-    private bool isInJumpingState;
-    private bool isInFallingState;
-    private bool isInIdleState;
+
 
     private void Awake()
     {
+        _playerState = GetComponent<PlayerState>();
         _playerMovementInput = GetComponent<PlayerMovementInput>();
         _playerRb = GetComponent<Rigidbody2D>();
     }
@@ -32,9 +34,9 @@ public class Player2DMovement : MonoBehaviour
     }
     private void OnCollisionEnter2D(UnityEngine.Collision2D collision)
     {
+        bool isInJumpingState = _playerState.CurrentMovementState == PlayerMovementState.Jumping;
         if (collision.gameObject.TryGetComponent<IHasHealth>(out IHasHealth other))
         {
-            print("collide");
             if (!isInJumpingState)
             {
                 other.TakeDamage(1);
@@ -46,38 +48,57 @@ public class Player2DMovement : MonoBehaviour
     private void HandlePlayerMovement()
     {
         _isGrounded = Physics2D.OverlapCircle(_groundCheckPoint.position, _groundCheckRadius, _groundLayer);
+        bool isInFallingState = _playerState.CurrentMovementState == PlayerMovementState.Falling;
         if (_playerMovementInput != null)
         {
             if (_playerMovementInput.JumpPressed && _isGrounded && !isInFallingState)
             {
-                print("Jump");
+
                 _playerRb.linearVelocity = new Vector2(_playerRb.linearVelocity.x, _jumpForce);
             }
         }
         else { print("Player Input is Null"); }
 
+        if (_playerMovementInput.MoveInput.y < -0.5f && _isGrounded)
+        {
+            StartCoroutine(DisableCollisionTemporarily());
+        }
         _playerRb.linearVelocity = new Vector2(_playerMovementInput.MoveInput.x * _moveSpeed, _playerRb.linearVelocity.y);
     }
     private void HandlePlayerStates()
     {
-        if (_playerRb.linearVelocity.y > 0)
+        float verticalVelocity = _playerRb.linearVelocity.y;
+        float epsilon = 0.01f;
+
+        if (verticalVelocity > epsilon)
         {
-            isInJumpingState = true;
-            isInFallingState = false;
-            isInIdleState = false;
+            _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
         }
-        else if (_playerRb.linearVelocity.y < 0)
+        else if (verticalVelocity < -epsilon && !_isGrounded)
         {
-            isInFallingState = true;
-            isInJumpingState = false;
-            isInIdleState = false;
+            _playerState.SetCurrentMovementState(PlayerMovementState.Falling);
         }
-        else if (_playerRb.linearVelocity.y == 0)
+        else
         {
-            isInIdleState = true;
-            isInFallingState = false;
-            isInJumpingState = false;
+            _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
         }
 
     }
+    private IEnumerator DisableCollisionTemporarily()
+    {
+        Collider2D[] platforms = Physics2D.OverlapCircleAll(transform.position, 1f, _groundLayer);
+
+        foreach (var platform in platforms)
+        {
+            Physics2D.IgnoreCollision(_playerCollider, platform, true);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        foreach (var platform in platforms)
+        {
+           
+            Physics2D.IgnoreCollision(_playerCollider, platform, false);
+        }
     }
+}

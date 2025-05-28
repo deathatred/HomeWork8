@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Platform : MonoBehaviour, IHasHealth
@@ -30,7 +31,14 @@ public class Platform : MonoBehaviour, IHasHealth
         Health -= amount;
         if (Health <= 0)
         {
-            rb.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
+            StartCoroutine(EnableFallingAfterDelay(0.3f));
         }
+    }
+
+    private IEnumerator EnableFallingAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        rb.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
+        GetComponent<Collider2D>().enabled = false;
     }
 }
