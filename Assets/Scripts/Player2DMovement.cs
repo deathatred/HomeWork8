@@ -54,7 +54,7 @@ public class Player2DMovement : MonoBehaviour
         {
             if (_playerMovementInput.JumpPressed && _isGrounded && !isInFallingState)
             {
-
+                SceneManager.Instance?.ChangeAllColorsInScene();
                 _playerRb.linearVelocity = new Vector2(_playerRb.linearVelocity.x, _jumpForce);
             }
         }
