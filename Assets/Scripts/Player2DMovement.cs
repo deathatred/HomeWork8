@@ -30,6 +30,7 @@ public class Player2DMovement : MonoBehaviour
     private void Update()
     {
         HandlePlayerMovement();
+        HandlePlayerRotation();
         HandlePlayerStates();
     }
     private void OnCollisionEnter2D(UnityEngine.Collision2D collision)
@@ -82,7 +83,19 @@ public class Player2DMovement : MonoBehaviour
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
         }
-
+    }
+    private void HandlePlayerRotation()
+    {
+        float playerXScale = 5.15f;
+        Vector2 moveInput = _playerMovementInput.MoveInput; 
+        if (moveInput.x > 0)
+        {
+            transform.localScale = new Vector3(playerXScale, transform.localScale.y, transform.localScale.z);
+        }
+        else if (moveInput.x < 0)
+        {
+            transform.localScale = new Vector3(-playerXScale, transform.localScale.y, transform.localScale.z);
+        }
     }
     private IEnumerator DisableCollisionTemporarily()
     {

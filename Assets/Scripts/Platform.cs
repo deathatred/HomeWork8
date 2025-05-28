@@ -39,6 +39,6 @@ public class Platform : MonoBehaviour, IHasHealth
     {
         yield return new WaitForSeconds(delay);
         rb.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
-        GetComponent<Collider2D>().enabled = false;
+        //GetComponent<Collider2D>().enabled = false;
     }
 }
