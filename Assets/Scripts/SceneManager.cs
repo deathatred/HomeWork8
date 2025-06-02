@@ -3,7 +3,7 @@ using UnityEngine;
 public class SceneManager : MonoBehaviour
 {
     public static SceneManager Instance { get; private set; }
-
+    [SerializeField] private bool ToggleColorChange;
 
     private void Awake()
     {
@@ -14,16 +14,19 @@ public class SceneManager : MonoBehaviour
     }
     public void ChangeAllColorsInScene()
     {
-        //var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        if (ToggleColorChange)
+        {
+            var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
-        //foreach (var rootObj in currentScene.GetRootGameObjects())
-        //{
-        //    var sprites = rootObj.GetComponentsInChildren<SpriteRenderer>();
-        //    foreach (var sprite in sprites)
-        //    {
-        //        sprite.color = Random.ColorHSV();
-        //    }
-        //}
+            foreach (var rootObj in currentScene.GetRootGameObjects())
+            {
+                var sprites = rootObj.GetComponentsInChildren<SpriteRenderer>();
+                foreach (var sprite in sprites)
+                {
+                    sprite.color = Random.ColorHSV();
+                }
+            }
+        }
     }
 
 }

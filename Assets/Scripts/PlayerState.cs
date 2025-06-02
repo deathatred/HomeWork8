@@ -7,10 +7,6 @@ public class PlayerState : MonoBehaviour
 
     [SerializeField] private PlayerMovementState currMovStateDebugField;
 
-    private void Awake()
-    {
-
-    }
     private void Update()
     {
         currMovStateDebugField = CurrentMovementState;

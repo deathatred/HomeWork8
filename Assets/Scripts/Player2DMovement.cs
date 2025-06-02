@@ -69,6 +69,7 @@ public class Player2DMovement : MonoBehaviour
             {
                 SceneManager.Instance?.ChangeAllColorsInScene();
                 _playerRb.linearVelocity = new Vector2(_playerRb.linearVelocity.x, _jumpForce);
+                _playerMovementInput.SetJumpPressedFalse();
             }
         }
         else { print("Player Input is Null"); }
@@ -84,7 +85,7 @@ public class Player2DMovement : MonoBehaviour
         float verticalVelocity = _playerRb.linearVelocity.y;
         float epsilon = 0.01f;
 
-        if (verticalVelocity > epsilon)
+        if (verticalVelocity > epsilon && !_isGrounded)
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
             _DealtDamage = false;
@@ -92,6 +93,7 @@ public class Player2DMovement : MonoBehaviour
         else if (verticalVelocity < -epsilon && !_isGrounded)
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.Falling);
+            _playerMovementInput.SetJumpPressedFalse();
             _DealtDamage = false;
         }
         else

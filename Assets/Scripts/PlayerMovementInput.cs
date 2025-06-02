@@ -45,12 +45,13 @@ public class PlayerMovementInput : MonoBehaviour, PlayerInputActions.IPlayerLoco
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (!context.performed)
+        if (context.started)
         {
-            JumpPressed = false;
-            return;
+            JumpPressed = true;
         }
-            JumpPressed = true;   
-        
+    }
+    public void SetJumpPressedFalse()
+    {
+        JumpPressed = false;
     }
 }

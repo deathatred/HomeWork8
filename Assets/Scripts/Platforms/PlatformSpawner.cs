@@ -79,7 +79,8 @@ public class PlatformSpawner : MonoBehaviour
 
             usedXPositions.Add(platformPositionX);
 
-            var platformPosition = new Vector3(platformPositionX, platformPositionY, transform.position.z);
+            float randomYOffset = Random.Range(-1f, 1f);
+            var platformPosition = new Vector3(platformPositionX, platformPositionY+ randomYOffset, transform.position.z);
 
             var randomPlatform = _platformPrefabVariants[Random.Range(0,_platformPrefabVariants.Count)];
 
