@@ -19,7 +19,7 @@ public class Player2DMovement : MonoBehaviour
     private bool _DealtDamage;
 
     private float _groundCheckDistance = 0.2f;
-    private float _groundCheckRadius = 0.5f;
+    private float _groundCheckRadius = 0.6f;
 
 
 
@@ -60,7 +60,8 @@ public class Player2DMovement : MonoBehaviour
 
     private void HandlePlayerMovement()
     {
-        _isGrounded = Physics2D.OverlapCircle(_groundCheckPoint.position, _groundCheckRadius, _groundLayer);
+        RaycastHit2D hit = Physics2D.CircleCast(_groundCheckPoint.position, _groundCheckRadius, Vector2.down, 0.1f, _groundLayer);
+        _isGrounded = hit.collider != null && hit.normal.y > 0.5f;
         bool isInFallingState = _playerState.CurrentMovementState == PlayerMovementState.Falling;
         bool isInJumpingState = _playerState.CurrentMovementState == PlayerMovementState.Jumping;
         if (_playerMovementInput != null)
