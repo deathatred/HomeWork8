@@ -14,16 +14,16 @@ public class SceneManager : MonoBehaviour
     }
     public void ChangeAllColorsInScene()
     {
-        var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        //var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
-        foreach (var rootObj in currentScene.GetRootGameObjects())
-        {
-            var sprites = rootObj.GetComponentsInChildren<SpriteRenderer>();
-            foreach (var sprite in sprites)
-            {
-                sprite.color = Random.ColorHSV();
-            }
-        }
+        //foreach (var rootObj in currentScene.GetRootGameObjects())
+        //{
+        //    var sprites = rootObj.GetComponentsInChildren<SpriteRenderer>();
+        //    foreach (var sprite in sprites)
+        //    {
+        //        sprite.color = Random.ColorHSV();
+        //    }
+        //}
     }
 
 }

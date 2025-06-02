@@ -6,6 +6,7 @@ public class Platform : MonoBehaviour, IHasHealth
     [SerializeField]
     private int health;
     private Rigidbody2D rb;
+    protected bool _isAlive = true;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class Platform : MonoBehaviour, IHasHealth
         Health -= amount;
         if (Health <= 0)
         {
+            _isAlive = false;
             StartCoroutine(EnableFallingAfterDelay(0.3f));
         }
     }

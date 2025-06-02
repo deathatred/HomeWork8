@@ -7,10 +7,12 @@ public class PlayerMovementInput : MonoBehaviour, PlayerInputActions.IPlayerLoco
     public bool JumpPressed { get; private set; }   
 
     private PlayerInputActions _inputActions;
+    private PlayerState _playerState;
 
     private void Awake()
     {
         _inputActions = new PlayerInputActions();
+        _playerState = GetComponent<PlayerState>();
     }
     void OnEnable()
     {
@@ -48,6 +50,7 @@ public class PlayerMovementInput : MonoBehaviour, PlayerInputActions.IPlayerLoco
             JumpPressed = false;
             return;
         }
-        JumpPressed = true;
+            JumpPressed = true;   
+        
     }
 }

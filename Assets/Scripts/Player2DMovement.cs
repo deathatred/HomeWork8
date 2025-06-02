@@ -13,9 +13,11 @@ public class Player2DMovement : MonoBehaviour
     private PlayerState _playerState;
 
     private float _moveSpeed = 7f;
-    private float _jumpForce = 20f;
+    private float _jumpForce = 25f;
 
     private bool _isGrounded;
+    private bool _DealtDamage;
+
     private float _groundCheckDistance = 0.2f;
     private float _groundCheckRadius = 0.5f;
 
@@ -33,15 +35,25 @@ public class Player2DMovement : MonoBehaviour
         HandlePlayerRotation();
         HandlePlayerStates();
     }
+    private void OnDrawGizmosSelected()
+    {
+        if (_groundCheckPoint == null)
+            return;
+
+        Gizmos.color = _isGrounded ? Color.green : Color.red;
+        Gizmos.DrawWireSphere(_groundCheckPoint.position, _groundCheckRadius);
+    }
     private void OnCollisionEnter2D(UnityEngine.Collision2D collision)
     {
         bool isInJumpingState = _playerState.CurrentMovementState == PlayerMovementState.Jumping;
+        bool isInFallingState = _playerState.CurrentMovementState == PlayerMovementState.Falling;
         if (collision.gameObject.TryGetComponent<IHasHealth>(out IHasHealth other))
         {
-            if (!isInJumpingState)
+            if (!isInJumpingState && !_DealtDamage)
             {
                 other.TakeDamage(1);
                 print("Dealt damage");
+                _DealtDamage = true;
             }
         }
     }
@@ -50,9 +62,10 @@ public class Player2DMovement : MonoBehaviour
     {
         _isGrounded = Physics2D.OverlapCircle(_groundCheckPoint.position, _groundCheckRadius, _groundLayer);
         bool isInFallingState = _playerState.CurrentMovementState == PlayerMovementState.Falling;
+        bool isInJumpingState = _playerState.CurrentMovementState == PlayerMovementState.Jumping;
         if (_playerMovementInput != null)
         {
-            if (_playerMovementInput.JumpPressed && _isGrounded && !isInFallingState)
+            if (_playerMovementInput.JumpPressed && _isGrounded && !isInFallingState && !isInJumpingState)
             {
                 SceneManager.Instance?.ChangeAllColorsInScene();
                 _playerRb.linearVelocity = new Vector2(_playerRb.linearVelocity.x, _jumpForce);
@@ -74,10 +87,12 @@ public class Player2DMovement : MonoBehaviour
         if (verticalVelocity > epsilon)
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
+            _DealtDamage = false;
         }
         else if (verticalVelocity < -epsilon && !_isGrounded)
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.Falling);
+            _DealtDamage = false;
         }
         else
         {
