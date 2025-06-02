@@ -10,13 +10,15 @@ public class MovingPlatform : Platform
     private void Start()
     {
         _startPos = transform.position;
+        _rb = GetComponent<Rigidbody2D>();
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        if (_isAlive) 
+        if (_isAlive)
         {
-            float yOffset = Mathf.Sin(Time.time * speed);
-            transform.position = new Vector3(transform.position.x, yOffset, transform.position.z);
+            float yOffset = Mathf.Sin(Time.time * speed) * height;
+            Vector2 newPosition = _startPos + new Vector3(0f, yOffset, 0f);
+            _rb.MovePosition(newPosition);
         }
     }
 }
