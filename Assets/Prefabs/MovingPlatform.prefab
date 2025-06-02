@@ -231,7 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 2
   speed: 2
-  height: 2
+  height: 3
 --- !u!1 &4609287752893772389
 GameObject:
   m_ObjectHideFlags: 0
