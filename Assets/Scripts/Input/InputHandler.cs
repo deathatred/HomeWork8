@@ -5,6 +5,7 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
      PlayerInputActions.IPlayerActionMapActions
 {
     public bool FirstSpellPressed { get; private set; }
+    public bool SecondSpellPressed { get; private set; }
     public Vector2 MoveInput { get; private set; }
     public bool JumpPressed { get; private set; }
 
@@ -53,19 +54,32 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
             JumpPressed = true;
         }
     }
-    public void OnSkill(InputAction.CallbackContext context)
+    public void SetFirstSpellPressedFalse()
+    {
+        FirstSpellPressed = false;
+    }
+    public void SetSecondSpellPressedFalse()
+    {
+        SecondSpellPressed = false;
+    }
+    public void SetJumpPressedFalse()
+    {
+        JumpPressed = false;
+    }
+
+    public void OnFirstSkill(InputAction.CallbackContext context)
     {
         if (context.started)
         {
             FirstSpellPressed = true;
         }
     }
-    public void SetFirstSpellPressedFalse()
+
+    public void OnSecondSkill(InputAction.CallbackContext context)
     {
-        FirstSpellPressed = false;
-    }
-    public void SetJumpPressedFalse()
-    {
-        JumpPressed = false;
+        if (context.started)
+        {
+            SecondSpellPressed = true;
+        }
     }
 }

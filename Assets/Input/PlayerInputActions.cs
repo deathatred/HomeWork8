@@ -184,9 +184,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""1532c85b-e0ff-41c7-8bdc-300c9c22ccc1"",
             ""actions"": [
                 {
-                    ""name"": ""Skill"",
+                    ""name"": ""FirstSkill"",
                     ""type"": ""Button"",
                     ""id"": ""5d0ec317-7a4e-40b4-ab3c-5025719f3c9d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondSkill"",
+                    ""type"": ""Button"",
+                    ""id"": ""ee1d51a7-a791-4006-bd26-b3c4a67516e0"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -201,7 +210,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill"",
+                    ""action"": ""FirstSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""737020b5-cc75-4ec3-b343-e3ff0f364dee"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondSkill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -216,7 +236,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerLocomotionMap_Jump = m_PlayerLocomotionMap.FindAction("Jump", throwIfNotFound: true);
         // PlayerActionMap
         m_PlayerActionMap = asset.FindActionMap("PlayerActionMap", throwIfNotFound: true);
-        m_PlayerActionMap_Skill = m_PlayerActionMap.FindAction("Skill", throwIfNotFound: true);
+        m_PlayerActionMap_FirstSkill = m_PlayerActionMap.FindAction("FirstSkill", throwIfNotFound: true);
+        m_PlayerActionMap_SecondSkill = m_PlayerActionMap.FindAction("SecondSkill", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -405,7 +426,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // PlayerActionMap
     private readonly InputActionMap m_PlayerActionMap;
     private List<IPlayerActionMapActions> m_PlayerActionMapActionsCallbackInterfaces = new List<IPlayerActionMapActions>();
-    private readonly InputAction m_PlayerActionMap_Skill;
+    private readonly InputAction m_PlayerActionMap_FirstSkill;
+    private readonly InputAction m_PlayerActionMap_SecondSkill;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerActionMap".
     /// </summary>
@@ -418,9 +440,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public PlayerActionMapActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "PlayerActionMap/Skill".
+        /// Provides access to the underlying input action "PlayerActionMap/FirstSkill".
         /// </summary>
-        public InputAction @Skill => m_Wrapper.m_PlayerActionMap_Skill;
+        public InputAction @FirstSkill => m_Wrapper.m_PlayerActionMap_FirstSkill;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerActionMap/SecondSkill".
+        /// </summary>
+        public InputAction @SecondSkill => m_Wrapper.m_PlayerActionMap_SecondSkill;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -447,9 +473,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionMapActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionMapActionsCallbackInterfaces.Add(instance);
-            @Skill.started += instance.OnSkill;
-            @Skill.performed += instance.OnSkill;
-            @Skill.canceled += instance.OnSkill;
+            @FirstSkill.started += instance.OnFirstSkill;
+            @FirstSkill.performed += instance.OnFirstSkill;
+            @FirstSkill.canceled += instance.OnFirstSkill;
+            @SecondSkill.started += instance.OnSecondSkill;
+            @SecondSkill.performed += instance.OnSecondSkill;
+            @SecondSkill.canceled += instance.OnSecondSkill;
         }
 
         /// <summary>
@@ -461,9 +490,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="PlayerActionMapActions" />
         private void UnregisterCallbacks(IPlayerActionMapActions instance)
         {
-            @Skill.started -= instance.OnSkill;
-            @Skill.performed -= instance.OnSkill;
-            @Skill.canceled -= instance.OnSkill;
+            @FirstSkill.started -= instance.OnFirstSkill;
+            @FirstSkill.performed -= instance.OnFirstSkill;
+            @FirstSkill.canceled -= instance.OnFirstSkill;
+            @SecondSkill.started -= instance.OnSecondSkill;
+            @SecondSkill.performed -= instance.OnSecondSkill;
+            @SecondSkill.canceled -= instance.OnSecondSkill;
         }
 
         /// <summary>
@@ -527,11 +559,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPlayerActionMapActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Skill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "FirstSkill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSkill(InputAction.CallbackContext context);
+        void OnFirstSkill(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SecondSkill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSecondSkill(InputAction.CallbackContext context);
     }
 }

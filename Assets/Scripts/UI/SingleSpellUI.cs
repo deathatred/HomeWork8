@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FirstSpellUI : MonoBehaviour
+public class SingleSpellUI : MonoBehaviour
 {
-    public static FirstSpellUI Instance;
+    public static SingleSpellUI Instance;
     [SerializeField] private PlayerSkills _playerSkills;
 
     [SerializeField] private Image _firstSpellImage;
