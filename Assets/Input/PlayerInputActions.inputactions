@@ -92,6 +92,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PlayerActionMap",
+            "id": "1532c85b-e0ff-41c7-8bdc-300c9c22ccc1",
+            "actions": [
+                {
+                    "name": "Skill",
+                    "type": "Button",
+                    "id": "5d0ec317-7a4e-40b4-ab3c-5025719f3c9d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f99c3f5c-d475-417d-afc2-aa1b33fd2e37",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

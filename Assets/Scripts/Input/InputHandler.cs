@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovementInput : MonoBehaviour, PlayerInputActions.IPlayerLocomotionMapActions
+public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionMapActions,
+     PlayerInputActions.IPlayerActionMapActions
 {
-    public Vector2 MoveInput {  get; private set; }
-    public bool JumpPressed { get; private set; }   
+    public bool FirstSpellPressed { get; private set; }
+    public Vector2 MoveInput { get; private set; }
+    public bool JumpPressed { get; private set; }
 
     private PlayerInputActions _inputActions;
     private PlayerState _playerState;
@@ -20,6 +22,7 @@ public class PlayerMovementInput : MonoBehaviour, PlayerInputActions.IPlayerLoco
         {
             _inputActions.Enable();
             _inputActions.PlayerLocomotionMap.SetCallbacks(this);
+            _inputActions.PlayerActionMap.SetCallbacks(this);
         }
         else
         {
@@ -49,6 +52,17 @@ public class PlayerMovementInput : MonoBehaviour, PlayerInputActions.IPlayerLoco
         {
             JumpPressed = true;
         }
+    }
+    public void OnSkill(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            FirstSpellPressed = true;
+        }
+    }
+    public void SetFirstSpellPressedFalse()
+    {
+        FirstSpellPressed = false;
     }
     public void SetJumpPressedFalse()
     {

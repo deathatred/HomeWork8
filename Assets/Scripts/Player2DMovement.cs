@@ -8,7 +8,7 @@ public class Player2DMovement : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private Transform _groundCheckPoint;
 
-    private PlayerMovementInput _playerMovementInput;
+    private InputHandler _playerMovementInput;
     private Rigidbody2D _playerRb;
     private PlayerState _playerState;
 
@@ -26,7 +26,7 @@ public class Player2DMovement : MonoBehaviour
     private void Awake()
     {
         _playerState = GetComponent<PlayerState>();
-        _playerMovementInput = GetComponent<PlayerMovementInput>();
+        _playerMovementInput = GetComponent<InputHandler>();
         _playerRb = GetComponent<Rigidbody2D>();
     }
     private void Update()
