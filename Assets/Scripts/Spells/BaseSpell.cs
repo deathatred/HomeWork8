@@ -1,16 +1,9 @@
 using UnityEngine;
-
-public class BaseSpell : MonoBehaviour
+using UnityEngine.InputSystem;
+public abstract class BaseSpell : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public abstract float SkillCooldown { get; set; }
+    protected abstract ScriptableObject SpellSO { get; set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract void Cast(Transform playerTransform);
 }

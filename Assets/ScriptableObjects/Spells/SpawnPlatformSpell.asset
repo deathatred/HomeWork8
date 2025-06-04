@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7e15bc697079f449485f331a35d5de, type: 3}
+  m_Name: SpawnPlatformSpell
+  m_EditorClassIdentifier: 
+  skillAction: {fileID: 7712639662452355927, guid: 73c882d9b1ea12646ab0f40f81bb628e, type: 3}
+  skillImage: {fileID: 4599531335921283208, guid: afb0f16f6ddced5459d9101b1e8cdd95, type: 3}
+  spellPrefab: {fileID: 8796398769479724502, guid: abb1687cb342cbc41858a1f0682858d5, type: 3}

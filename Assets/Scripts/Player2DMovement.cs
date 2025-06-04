@@ -49,7 +49,7 @@ public class Player2DMovement : MonoBehaviour
         bool isInFallingState = _playerState.CurrentMovementState == PlayerMovementState.Falling;
         if (collision.gameObject.TryGetComponent<IHasHealth>(out IHasHealth other))
         {
-            if (!isInJumpingState && !_DealtDamage)
+            if (!isInJumpingState && !isInFallingState && !_DealtDamage)
             {
                 other.TakeDamage(1);
                 print("Dealt damage");

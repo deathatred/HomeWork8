@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,10 +14,13 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
     private PlayerInputActions _inputActions;
     private PlayerState _playerState;
 
+    public bool[] SpellPressedArray;
+
     private void Awake()
     {
         _inputActions = new PlayerInputActions();
         _playerState = GetComponent<PlayerState>();
+       
     }
     void OnEnable()
     {
@@ -54,18 +59,43 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
             JumpPressed = true;
         }
     }
-    public void SetFirstSpellPressedFalse()
+    public bool IsSpellPressed(int index)
     {
-        FirstSpellPressed = false;
+        if (index == 0)
+        {
+            return FirstSpellPressed;
+        }
+        if (index == 1)
+        {
+            return SecondSpellPressed;
+        }
+        else
+        {
+            Debug.LogError($"{index} Spell not found");
+            return false;
+        }
+
+
     }
-    public void SetSecondSpellPressedFalse()
+    public void SetSpellPressedFalse(int index)
     {
-        SecondSpellPressed = false;
+        if (index == 0)
+        {
+            FirstSpellPressed = false;
+            return;
+        }
+        if (index == 1)
+        {
+            SecondSpellPressed = false;
+            return;
+        }
+        else
+        {
+
+            Debug.LogError($"{index} Spell not found");
+        }
     }
-    public void SetJumpPressedFalse()
-    {
-        JumpPressed = false;
-    }
+
 
     public void OnFirstSkill(InputAction.CallbackContext context)
     {
@@ -81,5 +111,9 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
         {
             SecondSpellPressed = true;
         }
+    }
+    public void SetJumpPressedFalse()
+    {
+        JumpPressed = false;
     }
 }
