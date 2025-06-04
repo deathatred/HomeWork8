@@ -42,16 +42,20 @@ public class HorizontalBoostSpell : BaseSpell
     public override void Cast(Transform playerTransform)
     {
         PlayerAnimation playerAnim = playerTransform.GetComponent<PlayerAnimation>();
+        Rigidbody2D playerRb = playerTransform.GetComponent<Rigidbody2D>();
+        playerRb.gravityScale = 0f;
         playerAnim.SetIsSpinning(true);
     }
     public void BoostUpwards()
     {
-        print("IM HERE");
+        //also need to propel a bit up if idle(!) and freeze while spinning
         Transform playerTransform = GameObject.FindWithTag("Player").transform;
+        Rigidbody2D playerRb = playerTransform.GetComponent<Rigidbody2D>();
+        
         PlayerAnimation playerAnim = playerTransform.GetComponent<PlayerAnimation>();
         playerAnim.SetIsSpinning(false);
-        Rigidbody2D playerRb = playerTransform.GetComponent<Rigidbody2D>();
-        float jumpForce = 50f;
+        playerRb.gravityScale = 5f;
+        float jumpForce = 60f;
         playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, jumpForce);
     }
     private IEnumerator StartSpinningAndBoostingUp(Transform playerTransform)
