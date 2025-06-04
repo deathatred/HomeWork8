@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -40,8 +41,27 @@ public class HorizontalBoostSpell : BaseSpell
 
     public override void Cast(Transform playerTransform)
     {
-       Rigidbody2D playerRb = playerTransform.GetComponent<Rigidbody2D>();
-       float jumpForce = 50f; 
-       playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, jumpForce);
+        PlayerAnimation playerAnim = playerTransform.GetComponent<PlayerAnimation>();
+        playerAnim.SetIsSpinning(true);
+    }
+    public void BoostUpwards()
+    {
+        print("IM HERE");
+        Transform playerTransform = GameObject.FindWithTag("Player").transform;
+        PlayerAnimation playerAnim = playerTransform.GetComponent<PlayerAnimation>();
+        playerAnim.SetIsSpinning(false);
+        Rigidbody2D playerRb = playerTransform.GetComponent<Rigidbody2D>();
+        float jumpForce = 50f;
+        playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, jumpForce);
+    }
+    private IEnumerator StartSpinningAndBoostingUp(Transform playerTransform)
+    {
+        PlayerAnimation playerAnim = playerTransform.GetComponent<PlayerAnimation>();
+        playerAnim.SetIsSpinning(true);
+        yield return new WaitForSeconds(2f);
+        playerAnim.SetIsSpinning(false);
+        Rigidbody2D playerRb = playerTransform.GetComponent<Rigidbody2D>();
+        float jumpForce = 50f;
+        playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, jumpForce);
     }
 }

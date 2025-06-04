@@ -8,6 +8,9 @@ public class PlayerAnimation : MonoBehaviour
 
     private static int isJumpingHash = Animator.StringToHash("isJumping");
     private static int isFallingHash = Animator.StringToHash("isFalling");
+    private static int isSpinningHash = Animator.StringToHash("isSpinning");
+
+    public bool IsSpinning { get; private set; }
 
     private void Awake()
     {
@@ -23,8 +26,16 @@ public class PlayerAnimation : MonoBehaviour
     {
         bool isJumping = _playerState.CurrentMovementState == PlayerMovementState.Jumping;
         bool isFalling = _playerState.CurrentMovementState == PlayerMovementState.Falling;
+        bool isSpinning = IsSpinning;
 
+        _animator.SetBool(isSpinningHash,isSpinning);
         _animator.SetBool(isJumpingHash, isJumping);
         _animator.SetBool(isFallingHash, isFalling);
     }
+
+    public void SetIsSpinning(bool isSpinning)
+    {
+        IsSpinning = isSpinning;
+    }
+
 }

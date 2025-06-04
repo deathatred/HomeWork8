@@ -11,6 +11,7 @@ public class Player2DMovement : MonoBehaviour
     private InputHandler _playerMovementInput;
     private Rigidbody2D _playerRb;
     private PlayerState _playerState;
+    private PlayerAnimation _playerAnimation;
 
     private float _moveSpeed = 7f;
     private float _jumpForce = 25f;
@@ -25,6 +26,7 @@ public class Player2DMovement : MonoBehaviour
 
     private void Awake()
     {
+        _playerAnimation = GetComponent<PlayerAnimation>();
         _playerState = GetComponent<PlayerState>();
         _playerMovementInput = GetComponent<InputHandler>();
         _playerRb = GetComponent<Rigidbody2D>();
@@ -85,13 +87,13 @@ public class Player2DMovement : MonoBehaviour
     {
         float verticalVelocity = _playerRb.linearVelocity.y;
         float epsilon = 0.01f;
-
+        bool isSpinning = _playerAnimation.IsSpinning;
         if (verticalVelocity > epsilon && !_isGrounded)
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
             _DealtDamage = false;
         }
-        else if (verticalVelocity < -epsilon && !_isGrounded)
+        else if (verticalVelocity < -epsilon && !_isGrounded && !isSpinning)
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.Falling);
             _playerMovementInput.SetJumpPressedFalse();
