@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class PlayerWrapAround : MonoBehaviour
 {
+    private PlayerEffects _playerEffects;
+
+    private void Awake()
+    {
+        _playerEffects = GetComponent<PlayerEffects>();
+    }
     private void LateUpdate()
     {
         Vector3 pos = transform.position;
@@ -15,10 +21,12 @@ public class PlayerWrapAround : MonoBehaviour
         if (pos.x < leftEdge)
         {
             pos.x = rightEdge;
+          
         }
         if (pos.x > rightEdge)
         {
             pos.x = leftEdge;
+          
         }
         transform.position = pos;
     }

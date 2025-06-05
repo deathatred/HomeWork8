@@ -12,6 +12,7 @@ public class Player2DMovement : MonoBehaviour
     private Rigidbody2D _playerRb;
     private PlayerState _playerState;
     private PlayerAnimation _playerAnimation;
+    private PlayerEffects _playerEffects;
 
     private float _moveSpeed = 7f;
     private float _jumpForce = 25f;
@@ -19,8 +20,10 @@ public class Player2DMovement : MonoBehaviour
     private bool _isGrounded;
     private bool _DealtDamage;
 
-    private float _groundCheckDistance = 0.2f;
     private float _groundCheckRadius = 0.6f;
+
+    private float groundedBufferTime = 0.1f; // 0.1 секунди буфер
+    private float lastTimeInAir;
 
 
 
@@ -30,6 +33,7 @@ public class Player2DMovement : MonoBehaviour
         _playerState = GetComponent<PlayerState>();
         _playerMovementInput = GetComponent<InputHandler>();
         _playerRb = GetComponent<Rigidbody2D>();
+        _playerEffects = GetComponent<PlayerEffects>();
     }
     private void Update()
     {
@@ -88,10 +92,18 @@ public class Player2DMovement : MonoBehaviour
         float verticalVelocity = _playerRb.linearVelocity.y;
         float epsilon = 0.01f;
         bool isSpinning = _playerAnimation.IsSpinning;
+        if (!_isGrounded)
+        {
+            lastTimeInAir = Time.time;
+        }
+
+        bool isGroundedBuffered = _isGrounded && (Time.time - lastTimeInAir) > groundedBufferTime;
+
         if (verticalVelocity > epsilon && !_isGrounded)
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
             _DealtDamage = false;
+            return;
         }
         else if (verticalVelocity < -epsilon && !_isGrounded && !isSpinning)
         {
@@ -99,9 +111,10 @@ public class Player2DMovement : MonoBehaviour
             _playerMovementInput.SetJumpPressedFalse();
             _DealtDamage = false;
         }
-        else
+        else if (isGroundedBuffered)
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
+            _playerEffects.DisableTrail();
         }
     }
     private void HandlePlayerRotation()
