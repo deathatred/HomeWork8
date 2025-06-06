@@ -19,8 +19,6 @@ public class SingleSpellUI : MonoBehaviour
         float timer = _playerSkills.GetSpellCooldownTimer(_playerSkillsIndex);
         float cooldown = spell.SkillCooldown;
 
-        Debug.Log($"Timer: {timer}, Cooldown: {cooldown}");
-
         _spellImage.sprite = spellSO.spellImage;
 
         if (timer <= 0f)

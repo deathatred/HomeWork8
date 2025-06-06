@@ -29,7 +29,6 @@ public class PlayerSkills : MonoBehaviour
     {
         for (int i = 0; i < _playerSpells.Count; i++)
         {
-            print($"Handling {i} spell");
             HandleSpell(i);
         }
 

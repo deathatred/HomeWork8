@@ -193,7 +193,6 @@ GameObject:
   - component: {fileID: 6956273858984584720}
   - component: {fileID: 3848357512345751352}
   - component: {fileID: 3532725245746794226}
-  - component: {fileID: 696418876699779028}
   - component: {fileID: 7949500709458006025}
   - component: {fileID: 3525500771831041587}
   - component: {fileID: 1482418211392681089}
@@ -338,22 +337,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currMovStateDebugField: 0
---- !u!114 &696418876699779028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8846858901651438904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19cafede32d76854b92a15deac67802d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformPrefab: {fileID: 9219380540708077926, guid: 693451f842a63af449548b7e084d14d6, type: 3}
-  _playerSpells:
-  - {fileID: 11400000, guid: d04b0ffd7a9f1a24ca236567a2ba14a8, type: 2}
-  - {fileID: 11400000, guid: 94dfd0d493331d145832a4275a6b443f, type: 2}
 --- !u!114 &7949500709458006025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,7 +527,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spellSO: {fileID: 11400000, guid: 94dfd0d493331d145832a4275a6b443f, type: 2}
-  _SkillCooldown: 2
 --- !u!1001 &5758412863091029901
 PrefabInstance:
   m_ObjectHideFlags: 0

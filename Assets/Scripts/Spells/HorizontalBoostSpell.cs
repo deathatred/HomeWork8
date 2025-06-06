@@ -6,7 +6,8 @@ using UnityEngine;
 public class HorizontalBoostSpell : BaseSpell
 {
     [SerializeField] private ScriptableObject _spellSO;
-    [SerializeField] private float _SkillCooldown = 2f;
+    private float _SkillCooldown = 15f;
+
     public override float SkillCooldown
     {
         get => _SkillCooldown;
@@ -57,16 +58,6 @@ public class HorizontalBoostSpell : BaseSpell
         playerAnim.SetIsSpinning(false);
         playerRb.gravityScale = 5f;
         float jumpForce = 60f;
-        playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, jumpForce);
-    }
-    private IEnumerator StartSpinningAndBoostingUp(Transform playerTransform)
-    {
-        PlayerAnimation playerAnim = playerTransform.GetComponent<PlayerAnimation>();
-        playerAnim.SetIsSpinning(true);
-        yield return new WaitForSeconds(2f);
-        playerAnim.SetIsSpinning(false);
-        Rigidbody2D playerRb = playerTransform.GetComponent<Rigidbody2D>();
-        float jumpForce = 50f;
         playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, jumpForce);
     }
 }

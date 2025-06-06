@@ -52,7 +52,6 @@ public class Player2DMovement : MonoBehaviour
         if (hit != null && hit.TryGetComponent<IHasHealth>(out IHasHealth target) && !_DealtDamage)
         {
             target.TakeDamage(1);
-            print("Dealt damage to platform in Idle");
             _playerEffects.DisableTrail();
             _DealtDamage = true;
         }
@@ -134,15 +133,21 @@ public class Player2DMovement : MonoBehaviour
 
         foreach (var platform in platforms)
         {
-            Physics2D.IgnoreCollision(_playerCollider, platform, true);
+            if (platform != null)
+            {
+                Physics2D.IgnoreCollision(_playerCollider, platform, true);
+            }
         }
 
         yield return new WaitForSeconds(0.5f);
 
         foreach (var platform in platforms)
         {
-           
-            Physics2D.IgnoreCollision(_playerCollider, platform, false);
+
+            if (platform != null)
+            {
+                Physics2D.IgnoreCollision(_playerCollider, platform, true);
+            }
         }
     }
 }
