@@ -12,7 +12,6 @@ public class PlayerSkills : MonoBehaviour
     public float FirstSpellTimer { get; private set; } = 0f;
     public float SecondSpellTimer { get; private set; } = 0f;
     private float _firstSpellCooldown = 0f;
-    private float _secondSpellCooldown = 0f;
 
     [SerializeField] private List<SpellsSO> _playerSpells;
 

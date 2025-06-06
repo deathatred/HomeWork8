@@ -22,9 +22,6 @@ public class Player2DMovement : MonoBehaviour
 
     private float _groundCheckRadius = 0.6f;
 
-    private float groundedBufferTime = 0.1f; // 0.1 секунди буфер
-    private float lastTimeInAir;
-
 
 
     private void Awake()
@@ -59,6 +56,7 @@ public class Player2DMovement : MonoBehaviour
             {
                 other.TakeDamage(1);
                 print("Dealt damage");
+                _playerEffects.DisableTrail();
                 _DealtDamage = true;
             }
         }
@@ -74,6 +72,7 @@ public class Player2DMovement : MonoBehaviour
         {
             if (_playerMovementInput.JumpPressed && _isGrounded && !isInFallingState && !isInJumpingState)
             {
+
                 SceneManager.Instance?.ChangeAllColorsInScene();
                 _playerRb.linearVelocity = new Vector2(_playerRb.linearVelocity.x, _jumpForce);
                 _playerMovementInput.SetJumpPressedFalse();
@@ -92,29 +91,28 @@ public class Player2DMovement : MonoBehaviour
         float verticalVelocity = _playerRb.linearVelocity.y;
         float epsilon = 0.01f;
         bool isSpinning = _playerAnimation.IsSpinning;
-        if (!_isGrounded)
-        {
-            lastTimeInAir = Time.time;
-        }
 
-        bool isGroundedBuffered = _isGrounded && (Time.time - lastTimeInAir) > groundedBufferTime;
 
         if (verticalVelocity > epsilon && !_isGrounded)
         {
-            _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
             _DealtDamage = false;
+            _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
             return;
         }
         else if (verticalVelocity < -epsilon && !_isGrounded && !isSpinning)
         {
+            _DealtDamage = false;
             _playerState.SetCurrentMovementState(PlayerMovementState.Falling);
             _playerMovementInput.SetJumpPressedFalse();
-            _DealtDamage = false;
+            return;
         }
-        else if (isGroundedBuffered)
+        else if (verticalVelocity == 0 && _isGrounded)
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
-            _playerEffects.DisableTrail();
+        }
+        else if (_isGrounded) 
+        {
+            _playerState.SetCurrentMovementState(PlayerMovementState.RidingPlatform);
         }
     }
     private void HandlePlayerRotation()
