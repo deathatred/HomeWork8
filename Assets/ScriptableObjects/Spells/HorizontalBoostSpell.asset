@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac7e15bc697079f449485f331a35d5de, type: 3}
   m_Name: HorizontalBoostSpell
   m_EditorClassIdentifier: 
-  spellAction: {fileID: 0}
+  spellAction: {fileID: -8035614639338896289, guid: 73c882d9b1ea12646ab0f40f81bb628e, type: 3}
   spellImage: {fileID: -3467111797294737376, guid: 3533483869164a04fb33be9426161735, type: 3}
   spellPrefab: {fileID: 864808037836588011, guid: d2a69eb6b154e8542b747ea88cda7c40, type: 3}

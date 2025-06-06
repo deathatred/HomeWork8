@@ -6,6 +6,7 @@ public class SpawnPlatformSpell : BaseSpell
 {
     [SerializeField] private ScriptableObject _spellSO;
     [SerializeField] private GameObject _platformPrefab;
+    [SerializeField] private ParticleSystem _particleSystem;
     private float _SkillCooldown = 12f;
     public override float SkillCooldown { get => _SkillCooldown; 
         set 
@@ -43,6 +44,18 @@ public class SpawnPlatformSpell : BaseSpell
         Vector3 platfromLocation = new Vector3(playerTransform.position.x, 
             playerTransform.position.y - platformYOffset,
             playerTransform.position.z);
-        Instantiate(_platformPrefab, platfromLocation, Quaternion.identity);
+        GameObject platform = Instantiate(_platformPrefab, platfromLocation, Quaternion.identity);
+        if (_particleSystem != null)
+        {
+
+            ParticleSystem ps = Instantiate(_particleSystem, platform.transform.position, Quaternion.identity);
+
+            // Запускаємо ефект
+            ps.Play();
+
+            // Знищимо GameObject з ParticleSystem після завершення
+            Destroy(ps.gameObject, ps.main.duration + ps.main.startLifetime.constantMax);
+        }
+        else print("null");
     }
 }

@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spellSO: {fileID: 11400000, guid: d04b0ffd7a9f1a24ca236567a2ba14a8, type: 2}
-  _platformPrefab: {fileID: 4429464962589253027, guid: 693451f842a63af449548b7e084d14d6, type: 3}
+  _platformPrefab: {fileID: 8624100363253793863, guid: f2b52629e7f8a9343b88de923ddd0cfa, type: 3}
+  _particleSystem: {fileID: 6191188398579480490, guid: 615a30f33b23abb438c85dc3f58d6c08, type: 3}

@@ -45,10 +45,10 @@ public class PlayerSkills : MonoBehaviour
         }
         if (_inputHandler.IsSpellPressed(index) && _spellTimers[index] <= 0f)
         {
-            print("Im here");
             spell.Cast(transform);
             _inputHandler.SetSpellPressedFalse(index);
             _spellTimers[index] = cooldown;
+            
         }
     }
   

@@ -46,19 +46,15 @@ public class Player2DMovement : MonoBehaviour
         Gizmos.color = _isGrounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(_groundCheckPoint.position, _groundCheckRadius);
     }
-    private void OnCollisionEnter2D(UnityEngine.Collision2D collision)
+    private void TryDealDamageUnderPlayer()
     {
-        bool isInJumpingState = _playerState.CurrentMovementState == PlayerMovementState.Jumping;
-        bool isInFallingState = _playerState.CurrentMovementState == PlayerMovementState.Falling;
-        if (collision.gameObject.TryGetComponent<IHasHealth>(out IHasHealth other))
+        Collider2D hit = Physics2D.OverlapCircle(_groundCheckPoint.position, 0.3f, _groundLayer);
+        if (hit != null && hit.TryGetComponent<IHasHealth>(out IHasHealth target) && !_DealtDamage)
         {
-            if (!isInJumpingState && !isInFallingState && !_DealtDamage)
-            {
-                other.TakeDamage(1);
-                print("Dealt damage");
-                _playerEffects.DisableTrail();
-                _DealtDamage = true;
-            }
+            target.TakeDamage(1);
+            print("Dealt damage to platform in Idle");
+            _playerEffects.DisableTrail();
+            _DealtDamage = true;
         }
     }
 
@@ -68,6 +64,7 @@ public class Player2DMovement : MonoBehaviour
         _isGrounded = hit.collider != null && hit.normal.y > 0.5f;
         bool isInFallingState = _playerState.CurrentMovementState == PlayerMovementState.Falling;
         bool isInJumpingState = _playerState.CurrentMovementState == PlayerMovementState.Jumping;
+     
         if (_playerMovementInput != null)
         {
             if (_playerMovementInput.JumpPressed && _isGrounded && !isInFallingState && !isInJumpingState)
@@ -106,13 +103,16 @@ public class Player2DMovement : MonoBehaviour
             _playerMovementInput.SetJumpPressedFalse();
             return;
         }
-        else if (verticalVelocity == 0 && _isGrounded)
-        {
-            _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
-        }
-        else if (_isGrounded) 
+        else if (_isGrounded && (verticalVelocity < -epsilon || verticalVelocity > epsilon))
         {
             _playerState.SetCurrentMovementState(PlayerMovementState.RidingPlatform);
+            return;
+        }
+        else if (_isGrounded && Mathf.Abs(verticalVelocity) <= epsilon)
+        {
+            _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
+            TryDealDamageUnderPlayer();
+            return;
         }
     }
     private void HandlePlayerRotation()

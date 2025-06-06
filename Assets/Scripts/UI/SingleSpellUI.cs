@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class SingleSpellUI : MonoBehaviour
 {
-    public static SingleSpellUI Instance;
     [SerializeField] private PlayerSkills _playerSkills;
     [SerializeField] private int _playerSkillsIndex;
     [SerializeField] private Image _spellImage;
@@ -11,7 +10,7 @@ public class SingleSpellUI : MonoBehaviour
 
     private void Awake()
     {
-
+      
     }
     private void Update()
     {
@@ -19,6 +18,8 @@ public class SingleSpellUI : MonoBehaviour
         BaseSpell spell = spellSO.spellPrefab.GetComponent<BaseSpell>();
         float timer = _playerSkills.GetSpellCooldownTimer(_playerSkillsIndex);
         float cooldown = spell.SkillCooldown;
+
+        Debug.Log($"Timer: {timer}, Cooldown: {cooldown}");
 
         _spellImage.sprite = spellSO.spellImage;
 
