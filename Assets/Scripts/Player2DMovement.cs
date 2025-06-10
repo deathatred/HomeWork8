@@ -21,8 +21,8 @@ public class Player2DMovement : MonoBehaviour
     private bool _DealtDamage;
 
     private float _groundCheckRadius = 0.6f;
-
-
+    private float _ridingPlatformDelay = 0.15f;
+    private float _ridingPlatformTimer = 0f;
 
     private void Awake()
     {
@@ -59,10 +59,10 @@ public class Player2DMovement : MonoBehaviour
 
     private void HandlePlayerMovement()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(_groundCheckPoint.position, _groundCheckRadius, Vector2.down, 0.1f, _groundLayer);
-        _isGrounded = hit.collider != null && hit.normal.y > 0.5f;
         bool isInFallingState = _playerState.CurrentMovementState == PlayerMovementState.Falling;
         bool isInJumpingState = _playerState.CurrentMovementState == PlayerMovementState.Jumping;
+        RaycastHit2D hit = Physics2D.CircleCast(_groundCheckPoint.position, _groundCheckRadius, Vector2.down, 0.1f, _groundLayer);
+        _isGrounded = hit.collider != null && hit.normal.y > 0.5f && !isInJumpingState;
      
         if (_playerMovementInput != null)
         {
@@ -82,38 +82,98 @@ public class Player2DMovement : MonoBehaviour
         }
         _playerRb.linearVelocity = new Vector2(_playerMovementInput.MoveInput.x * _moveSpeed, _playerRb.linearVelocity.y);
     }
+    //private void HandlePlayerStates() //old method
+    //{
+    //    float verticalVelocity = _playerRb.linearVelocity.y;
+    //    float horizontalVelocity = _playerRb.linearVelocity.x;
+    //    float epsilon = 0.01f;
+    //    bool isSpinning = _playerAnimation.IsSpinning;
+
+    //    if (verticalVelocity > epsilon && !_isGrounded)
+    //    {
+    //        _DealtDamage = false;
+    //        _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
+    //        return;
+    //    }
+    //    else if (verticalVelocity < -epsilon && !_isGrounded && !isSpinning)
+    //    {
+    //        _DealtDamage = false;
+    //        _playerState.SetCurrentMovementState(PlayerMovementState.Falling);
+    //        _playerMovementInput.SetJumpPressedFalse();
+    //        return;
+    //    }
+    //    else if (_isGrounded && (verticalVelocity < -epsilon || verticalVelocity > epsilon))
+    //    {
+    //        _playerState.SetCurrentMovementState(PlayerMovementState.RidingPlatform);
+    //        return;
+    //    }
+    //    else if (_isGrounded && Mathf.Abs(verticalVelocity) <= epsilon)
+    //    {
+    //        _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
+    //        TryDealDamageUnderPlayer();
+    //    } 
+    //    if (_isGrounded && Mathf.Abs(verticalVelocity) <= epsilon && horizontalVelocity != 0)
+    //    {
+    //        _playerState.SetCurrentMovementState(PlayerMovementState.Running);
+    //    }
+
+    //}
     private void HandlePlayerStates()
     {
         float verticalVelocity = _playerRb.linearVelocity.y;
+        float horizontalVelocity = _playerRb.linearVelocity.x;
         float epsilon = 0.01f;
         bool isSpinning = _playerAnimation.IsSpinning;
 
+        if (!_isGrounded)
+        {
+            _DealtDamage = false;
+            _ridingPlatformTimer = 0f;
 
-        if (verticalVelocity > epsilon && !_isGrounded)
-        {
-            _DealtDamage = false;
-            _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
-            return;
+            if (verticalVelocity > epsilon)
+            {
+                _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
+                return;
+            }
+            else if (verticalVelocity < -epsilon && !isSpinning)
+            {
+                _playerState.SetCurrentMovementState(PlayerMovementState.Falling);
+                _playerMovementInput.SetJumpPressedFalse();
+                return;
+            }
         }
-        else if (verticalVelocity < -epsilon && !_isGrounded && !isSpinning)
+        if (_isGrounded)
         {
-            _DealtDamage = false;
-            _playerState.SetCurrentMovementState(PlayerMovementState.Falling);
-            _playerMovementInput.SetJumpPressedFalse();
-            return;
-        }
-        else if (_isGrounded && (verticalVelocity < -epsilon || verticalVelocity > epsilon))
-        {
-            _playerState.SetCurrentMovementState(PlayerMovementState.RidingPlatform);
-            return;
-        }
-        else if (_isGrounded && Mathf.Abs(verticalVelocity) <= epsilon)
-        {
-            _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
-            TryDealDamageUnderPlayer();
-            return;
+            if (Mathf.Abs(verticalVelocity) <= epsilon)
+            {
+                _ridingPlatformTimer = 0f;
+
+                if (Mathf.Abs(horizontalVelocity) > epsilon)
+                {
+                    _playerState.SetCurrentMovementState(PlayerMovementState.Running);
+                }
+                else
+                {
+                    _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
+                    TryDealDamageUnderPlayer();
+                }
+            }
+            else
+            {
+                _ridingPlatformTimer += Time.deltaTime;
+
+                if (_ridingPlatformTimer >= _ridingPlatformDelay)
+                {
+                    _playerState.SetCurrentMovementState(PlayerMovementState.RidingPlatform);
+                    TryDealDamageUnderPlayer();
+                }
+                else
+                {
+                }
+            }
         }
     }
+
     private void HandlePlayerRotation()
     {
         float playerXScale = 5.15f;

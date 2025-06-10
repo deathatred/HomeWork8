@@ -22,5 +22,7 @@ public enum PlayerMovementState
     Idle,
     Jumping,
     Falling,
-    RidingPlatform
+    RidingPlatform,
+    Running,
+    Dashing
 }
