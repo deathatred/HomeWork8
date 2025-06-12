@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player2DMovement : MonoBehaviour
 {
+    public static Player2DMovement Instance;
+
     [SerializeField] private Collider2D _playerCollider;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private Transform _groundCheckPoint;
@@ -13,6 +16,8 @@ public class Player2DMovement : MonoBehaviour
     private PlayerState _playerState;
     private PlayerAnimation _playerAnimation;
     private PlayerEffects _playerEffects;
+
+    public event EventHandler OnFinishPlatformReached;
 
     private float _moveSpeed = 7f;
     [SerializeField] private float _jumpForce = 35f;
@@ -26,6 +31,7 @@ public class Player2DMovement : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         _playerAnimation = GetComponent<PlayerAnimation>();
         _playerState = GetComponent<PlayerState>();
         _playerMovementInput = GetComponent<InputHandler>();
@@ -51,9 +57,17 @@ public class Player2DMovement : MonoBehaviour
         Collider2D hit = Physics2D.OverlapCircle(_groundCheckPoint.position, 0.3f, _groundLayer);
         if (hit != null && hit.TryGetComponent<IHasHealth>(out IHasHealth target) && !_DealtDamage)
         {
-            target.TakeDamage(1);
-            _playerEffects.DisableTrail();
-            _DealtDamage = true;
+            if (hit.TryGetComponent<FinishPlatform>(out FinishPlatform finish))
+            {
+                OnFinishPlatformReached?.Invoke(this,EventArgs.Empty);
+                Time.timeScale = 0f;
+            }
+            else
+            {
+                target.TakeDamage(1);
+                _playerEffects.DisableTrail();
+                _DealtDamage = true;
+            }
         }
     }
 
@@ -82,42 +96,6 @@ public class Player2DMovement : MonoBehaviour
         }
         _playerRb.linearVelocity = new Vector2(_playerMovementInput.MoveInput.x * _moveSpeed, _playerRb.linearVelocity.y);
     }
-    //private void HandlePlayerStates() //old method
-    //{
-    //    float verticalVelocity = _playerRb.linearVelocity.y;
-    //    float horizontalVelocity = _playerRb.linearVelocity.x;
-    //    float epsilon = 0.01f;
-    //    bool isSpinning = _playerAnimation.IsSpinning;
-
-    //    if (verticalVelocity > epsilon && !_isGrounded)
-    //    {
-    //        _DealtDamage = false;
-    //        _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
-    //        return;
-    //    }
-    //    else if (verticalVelocity < -epsilon && !_isGrounded && !isSpinning)
-    //    {
-    //        _DealtDamage = false;
-    //        _playerState.SetCurrentMovementState(PlayerMovementState.Falling);
-    //        _playerMovementInput.SetJumpPressedFalse();
-    //        return;
-    //    }
-    //    else if (_isGrounded && (verticalVelocity < -epsilon || verticalVelocity > epsilon))
-    //    {
-    //        _playerState.SetCurrentMovementState(PlayerMovementState.RidingPlatform);
-    //        return;
-    //    }
-    //    else if (_isGrounded && Mathf.Abs(verticalVelocity) <= epsilon)
-    //    {
-    //        _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
-    //        TryDealDamageUnderPlayer();
-    //    } 
-    //    if (_isGrounded && Mathf.Abs(verticalVelocity) <= epsilon && horizontalVelocity != 0)
-    //    {
-    //        _playerState.SetCurrentMovementState(PlayerMovementState.Running);
-    //    }
-
-    //}
     private void HandlePlayerStates()
     {
         float verticalVelocity = _playerRb.linearVelocity.y;
@@ -162,13 +140,15 @@ public class Player2DMovement : MonoBehaviour
             {
                 _ridingPlatformTimer += Time.deltaTime;
 
-                if (_ridingPlatformTimer >= _ridingPlatformDelay)
+                if (_ridingPlatformTimer >= _ridingPlatformDelay && Mathf.Abs(horizontalVelocity) < epsilon)
                 {
                     _playerState.SetCurrentMovementState(PlayerMovementState.RidingPlatform);
                     TryDealDamageUnderPlayer();
                 }
                 else
                 {
+                    _playerState.SetCurrentMovementState(PlayerMovementState.Running);
+                    TryDealDamageUnderPlayer();
                 }
             }
         }

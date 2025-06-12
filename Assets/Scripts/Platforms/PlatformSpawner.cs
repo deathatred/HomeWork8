@@ -11,11 +11,14 @@ public class PlatformSpawner : MonoBehaviour
     [Header("SpawnSettings")]
     [Space]
     [SerializeField] private List<Platform> _platformPrefabVariants;
+    [SerializeField] private GameObject _finishPlatform;
     [SerializeField] private Vector2Int _platformsSpawnedPerStepCount;
     [SerializeField] private int _stepsCountToSpawn;
     [SerializeField] private float _stepsCountToDelete;
     [SerializeField] private float _stepHeight;
     [SerializeField] private Vector2 _bounds;
+
+    private float maxY = 495f;
 
     private Queue<Platform[]> _spawnedPlatforms;
 
@@ -32,6 +35,8 @@ public class PlatformSpawner : MonoBehaviour
         {
             SpawnPlatform(i + 1);
         }
+        Vector3 finishLocation = new Vector3(0, 500, 0);
+        Instantiate(_finishPlatform, finishLocation, Quaternion.identity);
     }
     private void Update()
     {
@@ -81,12 +86,15 @@ public class PlatformSpawner : MonoBehaviour
 
             float randomYOffset = Random.Range(-1f, 1f);
             var platformPosition = new Vector3(platformPositionX, platformPositionY+ randomYOffset, transform.position.z);
+            if (platformPosition.y < maxY)
+            {
+                var randomPlatform = _platformPrefabVariants[Random.Range(0, _platformPrefabVariants.Count)];
 
-            var randomPlatform = _platformPrefabVariants[Random.Range(0,_platformPrefabVariants.Count)];
+                var spawnedPlatform = Instantiate(randomPlatform, platformPosition, Quaternion.identity, this.transform);
 
-            var spawnedPlatform = Instantiate(randomPlatform, platformPosition, Quaternion.identity, this.transform);
-
-            platformGroup[i] = spawnedPlatform;
+                platformGroup[i] = spawnedPlatform;
+            }
+            else { return; }
         }
 
         _spawnedPlatforms.Enqueue(platformGroup);
