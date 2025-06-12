@@ -19,5 +19,12 @@ public class Water : MonoBehaviour
         currentSpeed = Mathf.Min(startSpeed+ acceleration* timeElapsed, maxSpeed);
         transform.position += Vector3.up * currentSpeed * Time.deltaTime;
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            
+        }
+    }
 
 }

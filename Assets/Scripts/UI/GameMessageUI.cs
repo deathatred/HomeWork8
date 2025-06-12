@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameMessageUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _youWonMessage;
+    [SerializeField] private TextMeshProUGUI _youEscapedMessage;
     [SerializeField] private TextMeshProUGUI _gameOverMessage;
     [SerializeField] private TextMeshProUGUI _gameStartMessage;
     private void Start()
@@ -15,6 +15,6 @@ public class GameMessageUI : MonoBehaviour
 
     private void PlayerMovement_OnFinishPlatformReached(object sender, System.EventArgs e)
     {
-         
+         _youEscapedMessage.gameObject.SetActive(true);
     }
 }

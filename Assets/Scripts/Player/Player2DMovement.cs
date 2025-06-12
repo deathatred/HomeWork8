@@ -60,7 +60,6 @@ public class Player2DMovement : MonoBehaviour
             if (hit.TryGetComponent<FinishPlatform>(out FinishPlatform finish))
             {
                 OnFinishPlatformReached?.Invoke(this,EventArgs.Empty);
-                Time.timeScale = 0f;
             }
             else
             {
