@@ -15,7 +15,7 @@ public class Player2DMovement : MonoBehaviour
     private PlayerEffects _playerEffects;
 
     private float _moveSpeed = 7f;
-    private float _jumpForce = 25f;
+    [SerializeField] private float _jumpForce = 35f;
 
     private bool _isGrounded;
     private bool _DealtDamage;
