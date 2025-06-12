@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject _player;
     bool isGameOver = false;
     private void Start()
     {
+        _player = GameObject.FindWithTag("Player");
         Player2DMovement.Instance.OnFinishPlatformReached += Player2DMovement_OnFinishPlatformReached;
         Water.Instance.OnPlayerTouchedWater += Instance_OnPlayedTouchedWater;
     }
@@ -27,8 +30,10 @@ public class GameManager : MonoBehaviour
     
     private IEnumerator PlayerDrowning()
     {
-        //BlockInput
-        yield return new WaitForSeconds(0.15f);
+        //BlockInput 
+        InputHandler playerInput = _player.GetComponent<InputHandler>();
+        playerInput.enabled = false;
+        yield return new WaitForSeconds(0.17f);
         EndGame();
     }
 }
