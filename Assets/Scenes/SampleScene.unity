@@ -1910,6 +1910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5316aea9b08513c49b8c04bb8e6f8c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
 --- !u!4 &1224159937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9219380540708077926, guid: 693451f842a63af449548b7e084d14d6, type: 3}
@@ -1982,13 +1983,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: FinishPlatform
       objectReference: {fileID: 0}
+    - target: {fileID: 564785802144298503, guid: 8f85b77fd1f5fec4fbd6f29f8d0134fb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7077999852051512394, guid: 8f85b77fd1f5fec4fbd6f29f8d0134fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.395725
       objectReference: {fileID: 0}
     - target: {fileID: 7077999852051512394, guid: 8f85b77fd1f5fec4fbd6f29f8d0134fb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.7229434
+      value: -2.01
       objectReference: {fileID: 0}
     - target: {fileID: 7077999852051512394, guid: 8f85b77fd1f5fec4fbd6f29f8d0134fb, type: 3}
       propertyPath: m_LocalPosition.z
