@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Player2DMovement : MonoBehaviour
 {
-    public static Player2DMovement Instance;
+    public static Player2DMovement Instance { get; private set; }   
 
     [SerializeField] private Collider2D _playerCollider;
     [SerializeField] private LayerMask _groundLayer;
