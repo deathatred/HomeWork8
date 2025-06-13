@@ -6,11 +6,28 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject _player;
     bool isGameOver = false;
+    private void OnEnable()
+    {
+        ExplodeAction.OnPlayerExploded += ExplodeAction_OnPlayerExploded;
+    }
+    private void OnDisable()
+    {
+        ExplodeAction.OnPlayerExploded -= ExplodeAction_OnPlayerExploded;
+    }
+
+    private void ExplodeAction_OnPlayerExploded(object sender, System.EventArgs e)
+    {
+        EndGame();
+    }
+
     private void Start()
     {
         _player = GameObject.FindWithTag("Player");
         Player2DMovement.Instance.OnFinishPlatformReached += Player2DMovement_OnFinishPlatformReached;
-        Water.Instance.OnPlayerTouchedWater += Instance_OnPlayedTouchedWater;
+        if (Water.Instance != null)
+        {
+            Water.Instance.OnPlayerTouchedWater += Instance_OnPlayedTouchedWater;
+        }
     }
 
     private void Instance_OnPlayedTouchedWater(object sender, System.EventArgs e)

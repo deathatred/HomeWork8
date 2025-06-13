@@ -27,7 +27,7 @@ public class Platform : MonoBehaviour, IHasHealth
         }
     }
 
-    public void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount)
     {
         Health -= amount;
         if (Health <= 0)
