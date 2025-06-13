@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class Player2DMovement : MonoBehaviour
 {
@@ -221,5 +222,13 @@ public class Player2DMovement : MonoBehaviour
         _playerRb.linearVelocity = direction * knockbackSpeed;
         _isKnockback = true;
         _knockbackTimer = _knockbackDuration;
+    }
+    public float GetPlayerMoveSpeed()
+    {
+        return _moveSpeed;
+    }
+    public void ModifyPlayerSpeed(float amount) 
+    {
+        _moveSpeed += amount;
     }
 }
