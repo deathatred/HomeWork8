@@ -21,7 +21,7 @@ public class ExplodeAction : ActionBase
     private IEnumerator StartExploding()
     {
         int flashCount = 3;
-        float flashDuration = 0.2f;
+        float flashDuration = 0.15f;
 
         Color originalColor = _targetRenderersList[0].color;
 
@@ -51,6 +51,7 @@ public class ExplodeAction : ActionBase
                 OnPlayerExploded?.Invoke(transform.position);
             }
         }
+        Destroy(gameObject);
     }
 
 }

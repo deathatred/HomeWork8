@@ -22,7 +22,8 @@ public class GameManager : MonoBehaviour
     }
     private void ExplodeAction_OnPlayerExploded(Vector3 obj)
     {
-        IsPlayerDead = true;
+        float explodingDuration = 1.2f;
+        StartCoroutine(PlayerDying(explodingDuration));
     }
 
     private void Start()
@@ -37,7 +38,8 @@ public class GameManager : MonoBehaviour
 
     private void Instance_OnPlayedTouchedWater(object sender, System.EventArgs e)
     {
-        StartCoroutine(PlayerDrowning());
+        float drowningDuration = 0.17f;
+        StartCoroutine(PlayerDying(drowningDuration));
     }
 
     private void Player2DMovement_OnFinishPlatformReached(object sender, System.EventArgs e)
@@ -49,13 +51,14 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
     }
-    
-    private IEnumerator PlayerDrowning()
+
+    private IEnumerator PlayerDying(float duration)
     {
         //BlockInput 
+        IsPlayerDead = true;
         InputHandler playerInput = _player.GetComponent<InputHandler>();
         playerInput.enabled = false;
-        yield return new WaitForSeconds(0.17f);
+        yield return new WaitForSeconds(duration);
         EndGame();
     }
 }

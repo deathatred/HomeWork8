@@ -8,6 +8,20 @@ public class GameMessageUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _youEscapedMessage;
     [SerializeField] private TextMeshProUGUI _gameOverMessage;
     [SerializeField] private TextMeshProUGUI _gameStartMessage;
+    private void OnEnable()
+    {
+        ExplodeAction.OnPlayerExploded += ExplodeAction_OnPlayerExploded;
+    }
+    private void OnDisable()
+    {
+        ExplodeAction.OnPlayerExploded -= ExplodeAction_OnPlayerExploded;
+    }
+    private void ExplodeAction_OnPlayerExploded(Vector3 obj)
+    {
+        _gameOverMessage.gameObject.SetActive(true);
+    }
+
+   
     private void Start()
     {
         Player2DMovement.Instance.OnFinishPlatformReached += PlayerMovement_OnFinishPlatformReached;
