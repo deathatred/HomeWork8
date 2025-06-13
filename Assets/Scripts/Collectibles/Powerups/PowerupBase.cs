@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class PowerupBase : MonoBehaviour
 {
     protected abstract float Duration { get; set; }
+    [SerializeField] protected PowerupsSO _powerupsSO;
     protected bool _isActive;
 
     public abstract void Activate(GameObject player);
@@ -14,6 +15,8 @@ public abstract class PowerupBase : MonoBehaviour
         _isActive = true;
         if (Duration > 0)
         {
+            GetComponent<Collider2D>().enabled = false;
+            GetComponent<SpriteRenderer>().enabled = false;
             StartCoroutine(DeactivateAfterTime(player));
         }
     }
@@ -22,6 +25,10 @@ public abstract class PowerupBase : MonoBehaviour
         yield return new WaitForSeconds(Duration);
         Deactivate(player);
         _isActive = false;
-        
+        Destroy(gameObject);
+    }
+    public PowerupsSO GetPowerupSO()
+    {
+        return _powerupsSO;
     }
 }

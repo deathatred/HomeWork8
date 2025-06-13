@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b885d57d4afad24289e5bc62ba9eb2c, type: 3}
   m_Name: SpeedBoost
   m_EditorClassIdentifier: 
-  PowerupScripts: {fileID: 0}
-  spellPrefab: {fileID: 0}
+  PowerupPrefab: {fileID: 3022791888133763705, guid: 98d7983a52639074da5d90bb869eac5d, type: 3}
+  PowerupIcon: {fileID: 8918690243382714249, guid: b07f2fabb23c76140b3e5ccd847cf239, type: 3}

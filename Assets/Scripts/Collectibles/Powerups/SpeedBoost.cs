@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 public class SpeedBoost : PowerupBase
 {
-    public float _duration = 10f;
+    public float _duration = 7f;
     private float _speedBoostValue = 5f;
     private float _baseMoveSpeed;
     protected override float Duration
