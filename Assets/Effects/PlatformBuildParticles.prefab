@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6191188398579480490}
   - component: {fileID: 275529699472698351}
   m_Layer: 0
-  m_Name: Platform Build Particles
+  m_Name: PlatformBuildParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
