@@ -10,6 +10,7 @@ public class PlayerAnimation : MonoBehaviour
     private static int isFallingHash = Animator.StringToHash("isFalling");
     private static int isSpinningHash = Animator.StringToHash("isSpinning");
     private static int isRunningHash = Animator.StringToHash("isRunning");
+    private static int isDeadHash = Animator.StringToHash("isDead");
 
     public bool IsSpinning { get; private set; }
 
@@ -29,7 +30,9 @@ public class PlayerAnimation : MonoBehaviour
         bool isFalling = _playerState.CurrentMovementState == PlayerMovementState.Falling;
         bool isRunning = _playerState.CurrentMovementState == PlayerMovementState.Running;
         bool isSpinning = IsSpinning;
-      
+        bool isDead = GameManager.Instance.IsPlayerDead;
+
+        _animator.SetBool(isDeadHash, isDead);
         _animator.SetBool(isSpinningHash,isSpinning);
         _animator.SetBool(isJumpingHash, isJumping);
         _animator.SetBool(isFallingHash, isFalling);

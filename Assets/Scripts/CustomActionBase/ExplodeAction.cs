@@ -9,7 +9,7 @@ public class ExplodeAction : ActionBase
     [SerializeField] private ParticleSystem _explodeEffectParticles;
     [SerializeField] private List<SpriteRenderer> _targetRenderersList;
     [SerializeField] private float _explosionRadius = 3f;
-    public static event EventHandler OnPlayerExploded; 
+    public static event Action<Vector3> OnPlayerExploded; 
     protected override void ExecuteInternal()
     {
         Explode();
@@ -48,24 +48,7 @@ public class ExplodeAction : ActionBase
         {
             if (hit.CompareTag("Player"))
             {
-                Vector2 explosionPos = transform.position;
-                Vector2 playerPos = hit.transform.position;
-                Vector2 direction = (playerPos - explosionPos).normalized;
-
-                Player2DMovement playerMovement = hit.GetComponent<Player2DMovement>();
-                if (playerMovement != null)
-                {
-                    Rigidbody2D rb = playerMovement.GetComponent<Rigidbody2D>();
-                    if (rb != null)
-                    {
-                        float forceAmount = 1500f;
-                        rb.AddForce(direction * forceAmount);
-                    }
-                }
-
-                //OnPlayerExploded?.Invoke(this, EventArgs.Empty);
-
-
+                OnPlayerExploded?.Invoke(transform.position);
             }
         }
     }

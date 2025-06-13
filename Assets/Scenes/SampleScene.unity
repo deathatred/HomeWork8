@@ -7399,7 +7399,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2006665588
 Transform:
   m_ObjectHideFlags: 0
@@ -7614,6 +7614,10 @@ PrefabInstance:
       propertyPath: _jumpForce
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 4533279222049803767, guid: 2b80188a968078f41a4cc378206140fc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5466751576708610750, guid: 2b80188a968078f41a4cc378206140fc, type: 3}
       propertyPath: m_GravityScale
       value: 5
@@ -7720,10 +7724,6 @@ PrefabInstance:
     - target: {fileID: 3182047473701060782, guid: 3c5289d949d8c5e4cbe08f8abc4b9ebc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8980062237793324879, guid: 3c5289d949d8c5e4cbe08f8abc4b9ebc, type: 3}
-      propertyPath: _health
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

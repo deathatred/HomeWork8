@@ -4,8 +4,10 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }    
     [SerializeField] private GameObject _player;
-    bool isGameOver = false;
+    private bool isGameOver = false;
+    public bool IsPlayerDead { get; private set; }
     private void OnEnable()
     {
         ExplodeAction.OnPlayerExploded += ExplodeAction_OnPlayerExploded;
@@ -14,10 +16,13 @@ public class GameManager : MonoBehaviour
     {
         ExplodeAction.OnPlayerExploded -= ExplodeAction_OnPlayerExploded;
     }
-
-    private void ExplodeAction_OnPlayerExploded(object sender, System.EventArgs e)
+    private void Awake()
     {
-        EndGame();
+        Instance = this;
+    }
+    private void ExplodeAction_OnPlayerExploded(Vector3 obj)
+    {
+        IsPlayerDead = true;
     }
 
     private void Start()

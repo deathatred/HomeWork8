@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Player2DMovement : MonoBehaviour
 {
-    public static Player2DMovement Instance { get; private set; }   
+    public static Player2DMovement Instance { get; private set; }
 
     [SerializeField] private Collider2D _playerCollider;
     [SerializeField] private LayerMask _groundLayer;
@@ -16,6 +16,7 @@ public class Player2DMovement : MonoBehaviour
     private PlayerState _playerState;
     private PlayerAnimation _playerAnimation;
     private PlayerEffects _playerEffects;
+    private Vector2 _playerVelocityCache;
 
     public event EventHandler OnFinishPlatformReached;
 
@@ -29,6 +30,18 @@ public class Player2DMovement : MonoBehaviour
     private float _ridingPlatformDelay = 0.15f;
     private float _ridingPlatformTimer = 0f;
 
+    private bool _isKnockback;
+    private float _knockbackTimer = 0f;
+    private float _knockbackDuration = 0.5f;
+
+    private void OnEnable()
+    {
+        ExplodeAction.OnPlayerExploded += ExplodeAction_OnPlayerExploded;
+    }
+    private void OnDisable()
+    {
+        ExplodeAction.OnPlayerExploded -= ExplodeAction_OnPlayerExploded;
+    }
     private void Awake()
     {
         Instance = this;
@@ -40,7 +53,18 @@ public class Player2DMovement : MonoBehaviour
     }
     private void Update()
     {
-        HandlePlayerMovement();
+        if (!_isKnockback)
+        {
+            HandlePlayerMovement();
+        }
+        else
+        {
+            _knockbackTimer -= Time.deltaTime;
+            if (_knockbackTimer <= 0f && _playerMovementInput.MoveInput != Vector2.zero)
+            {
+                _isKnockback = false;
+            }
+        }
         HandlePlayerRotation();
         HandlePlayerStates();
     }
@@ -59,7 +83,7 @@ public class Player2DMovement : MonoBehaviour
         {
             if (hit.TryGetComponent<FinishPlatform>(out FinishPlatform finish))
             {
-                OnFinishPlatformReached?.Invoke(this,EventArgs.Empty);
+                OnFinishPlatformReached?.Invoke(this, EventArgs.Empty);
             }
             else
             {
@@ -76,7 +100,7 @@ public class Player2DMovement : MonoBehaviour
         bool isInJumpingState = _playerState.CurrentMovementState == PlayerMovementState.Jumping;
         RaycastHit2D hit = Physics2D.CircleCast(_groundCheckPoint.position, _groundCheckRadius, Vector2.down, 0.1f, _groundLayer);
         _isGrounded = hit.collider != null && hit.normal.y > 0.5f && !isInJumpingState;
-     
+
         if (_playerMovementInput != null)
         {
             if (_playerMovementInput.JumpPressed && _isGrounded && !isInFallingState && !isInJumpingState)
@@ -93,6 +117,7 @@ public class Player2DMovement : MonoBehaviour
         {
             StartCoroutine(DisableCollisionTemporarily());
         }
+
         _playerRb.linearVelocity = new Vector2(_playerMovementInput.MoveInput.x * _moveSpeed, _playerRb.linearVelocity.y);
     }
     private void HandlePlayerStates()
@@ -156,7 +181,7 @@ public class Player2DMovement : MonoBehaviour
     private void HandlePlayerRotation()
     {
         float playerXScale = 5.15f;
-        Vector2 moveInput = _playerMovementInput.MoveInput; 
+        Vector2 moveInput = _playerMovementInput.MoveInput;
         if (moveInput.x > 0)
         {
             transform.localScale = new Vector3(playerXScale, transform.localScale.y, transform.localScale.z);
@@ -188,5 +213,13 @@ public class Player2DMovement : MonoBehaviour
                 Physics2D.IgnoreCollision(_playerCollider, platform, true);
             }
         }
+    }
+    private void ExplodeAction_OnPlayerExploded(Vector3 obj)
+    {
+        Vector2 direction = (Vector2)(transform.position - obj).normalized;
+        float knockbackSpeed = 30f;
+        _playerRb.linearVelocity = direction * knockbackSpeed;
+        _isKnockback = true;
+        _knockbackTimer = _knockbackDuration;
     }
 }
