@@ -15,22 +15,16 @@ public class BuffUI : MonoBehaviour
     }
     private IEnumerator ShowBuffIcon(PowerupsSO powerupSO)
     {
-        //float duration = powerupSO.PowerupPrefab.GetComponent<PowerupBase>().Duration;
-        //Image powerupIcon = powerupSO.PowerupIcon;
-        //Image buffIcon = Instantiate(powerupIcon, transform);
-        //yield return new WaitForSeconds(duration);
-        //Destroy(buffIcon);
         float duration = powerupSO.PowerupPrefab.GetComponent<PowerupBase>().Duration;
         Image powerupIcon = powerupSO.PowerupIcon;
 
-        // Створюємо копію іконки
         Image buffIcon = Instantiate(powerupIcon, transform);
 
-        float blinkStartTime = Time.time + duration * 0.8f; // почати мигати на останніх 20%
+        float blinkStartTime = Time.time + duration * 0.8f;
         float endTime = Time.time + duration;
 
         bool blinking = false;
-        float blinkSpeed = 4f; // скільки разів в секунду буде мигати
+        float blinkSpeed = 4f;
 
         Color originalColor = buffIcon.color;
 

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerupsSO: {fileID: 11400000, guid: b962d027df9b6d048a04fd63b6b93fc8, type: 2}
-  _duration: 10
+  _duration: 5
 --- !u!61 &51871924090036487
 BoxCollider2D:
   m_ObjectHideFlags: 0

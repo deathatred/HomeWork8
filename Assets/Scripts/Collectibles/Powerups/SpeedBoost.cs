@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 public class SpeedBoost : PowerupBase
 {
-    public float _duration = 7f;
+    public float _duration = 3f;
     private float _speedBoostValue = 12f;
     private float _baseMoveSpeed;
     private bool _isSpeedStored = false;
@@ -42,5 +42,6 @@ public class SpeedBoost : PowerupBase
         {
             playerMovement.SetPlayerSpeed(_baseMoveSpeed);
         }
+
     }
 }
