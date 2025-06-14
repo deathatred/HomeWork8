@@ -6,6 +6,7 @@ public class PlayerPowerupsPickup : MonoBehaviour
 {
     public static PlayerPowerupsPickup Instance { get; private set; }
     public event Action<PowerupsSO> OnPowerupPicked;
+    public event Action<PowerupsSO> OnPowerupRefreshed;
     private readonly Dictionary<PowerupsSO, PowerupBase> _activePowerups = new();
 
 
@@ -40,6 +41,7 @@ public class PlayerPowerupsPickup : MonoBehaviour
                     {
                         _activePowerups[powerupSO].RefreshDuration(gameObject);
                         Destroy(collision.gameObject);
+                        OnPowerupPicked?.Invoke(powerup.GetPowerupSO());
                     }
                 }
 
