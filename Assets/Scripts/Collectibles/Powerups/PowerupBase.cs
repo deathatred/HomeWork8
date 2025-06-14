@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class PowerupBase : MonoBehaviour
 {
-    protected abstract float Duration { get; set; }
+    public abstract float Duration { get; set; }
     [SerializeField] protected PowerupsSO _powerupsSO;
     protected bool _isActive;
 

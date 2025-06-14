@@ -227,8 +227,8 @@ public class Player2DMovement : MonoBehaviour
     {
         return _moveSpeed;
     }
-    public void ModifyPlayerSpeed(float amount) 
+    public void SetPlayerSpeed(float amount)
     {
-        _moveSpeed += amount;
+        _moveSpeed = amount;
     }
 }

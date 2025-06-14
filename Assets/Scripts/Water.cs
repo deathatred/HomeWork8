@@ -8,7 +8,7 @@ public class Water : MonoBehaviour
     public event EventHandler OnPlayerTouchedWater;
     private float startSpeed = 1.0f;
     private float acceleration = 0.1f;
-    private float maxSpeed = 6.5f;
+    private float maxSpeed = 8f;
 
     private float currentSpeed;
     private float timeElapsed;

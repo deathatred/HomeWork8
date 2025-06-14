@@ -13,8 +13,11 @@ public class PlayerPowerupsPickup : MonoBehaviour
     {
         if (collision.TryGetComponent<PowerupBase>(out var powerup))
         {
-            powerup.PickUp(gameObject);
-            OnPowerupPicked(powerup.GetPowerupSO());
+            if (powerup != null)
+            {
+                powerup.PickUp(gameObject);
+                OnPowerupPicked?.Invoke(powerup.GetPowerupSO());
+            }
         }
     }
 }

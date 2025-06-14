@@ -1,16 +1,20 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnPowerUpAction : MonoBehaviour
+public class SpawnPowerUpAction : ActionBase
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Transform _spawnPowerupLocation;
+    [SerializeField] private PowerupsListSO _powerupList;
 
-    // Update is called once per frame
-    void Update()
+    protected override void ExecuteInternal()
     {
-        
+        float chance = 0.02f;
+
+        if (Random.value < chance)
+        {
+            int powerupsCount = _powerupList.PowerupList.Count;
+            Instantiate(_powerupList.PowerupList[Random.Range(0, powerupsCount)].PowerupPrefab, _spawnPowerupLocation.position, Quaternion.identity);
+        }
     }
 }

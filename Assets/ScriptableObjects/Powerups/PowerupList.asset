@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b885d57d4afad24289e5bc62ba9eb2c, type: 3}
-  m_Name: SpeedBoost
+  m_Script: {fileID: 11500000, guid: 0a9ce9f8af9f29341b05ad51ca21e76c, type: 3}
+  m_Name: PowerupList
   m_EditorClassIdentifier: 
-  PowerupPrefab: {fileID: 3022791888133763705, guid: 98d7983a52639074da5d90bb869eac5d, type: 3}
-  PowerupIcon: {fileID: 6276666553036627357, guid: 5b4367b39ae77e64b9b8d6049b06414c, type: 3}
+  PowerupList:
+  - {fileID: 11400000, guid: b962d027df9b6d048a04fd63b6b93fc8, type: 2}

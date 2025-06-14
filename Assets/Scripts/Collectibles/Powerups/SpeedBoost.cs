@@ -4,9 +4,10 @@ using UnityEngine.Rendering;
 public class SpeedBoost : PowerupBase
 {
     public float _duration = 7f;
-    private float _speedBoostValue = 5f;
+    private float _speedBoostValue = 12f;
     private float _baseMoveSpeed;
-    protected override float Duration
+    private bool _isSpeedStored = false;
+    public override float Duration
     {
         get => _duration;
         set
@@ -26,7 +27,12 @@ public class SpeedBoost : PowerupBase
     {     
        if (player.TryGetComponent<Player2DMovement>(out var playerMovement))
        {
-            playerMovement.ModifyPlayerSpeed(_speedBoostValue);
+            if (!_isSpeedStored)
+            {
+                _baseMoveSpeed = playerMovement.GetPlayerMoveSpeed();
+                _isSpeedStored = true;
+            }
+            playerMovement.SetPlayerSpeed(_speedBoostValue);
        }
     }
 
@@ -34,7 +40,7 @@ public class SpeedBoost : PowerupBase
     {
         if (player.TryGetComponent<Player2DMovement>(out var playerMovement))
         {
-            playerMovement.ModifyPlayerSpeed(-_speedBoostValue);
+            playerMovement.SetPlayerSpeed(_baseMoveSpeed);
         }
     }
 }
