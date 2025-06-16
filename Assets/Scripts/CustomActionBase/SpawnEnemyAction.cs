@@ -8,15 +8,19 @@ public class SpawnEnemyAction : ActionBase
     private GameObject _enemyGameObject;
     protected override void ExecuteInternal()
     {
+        Platform platform = transform.GetComponent<Platform>();
         float chance = 0.1f;
 
-        if (Random.value < chance)
+        if (Random.value < chance && !platform.GetHasSpawnedObject())
         {
             int powerupsCount = _enemiesList.Count;
             _enemyGameObject = Instantiate(_enemiesList[Random.Range(0, powerupsCount)],
             _spawnEnemyLocation.position, Quaternion.identity);
-            Platform platform = transform.GetComponent<Platform>();
             platform.SetHasSpawnedObject();
         }
+    }
+    private void OnDestroy()
+    {
+        Destroy( _enemyGameObject );
     }
 }

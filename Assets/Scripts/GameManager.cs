@@ -11,29 +11,32 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         ExplodeAction.OnPlayerExploded += ExplodeAction_OnPlayerExploded;
+
     }
     private void OnDisable()
     {
         ExplodeAction.OnPlayerExploded -= ExplodeAction_OnPlayerExploded;
+
     }
     private void Awake()
     {
         Instance = this;
     }
-    private void ExplodeAction_OnPlayerExploded(Vector3 obj)
-    {
-        float explodingDuration = 1.2f;
-        StartCoroutine(PlayerDying(explodingDuration));
-    }
-
     private void Start()
     {
         _player = GameObject.FindWithTag("Player");
         Player2DMovement.Instance.OnFinishPlatformReached += Player2DMovement_OnFinishPlatformReached;
+        PlayerTriggers.Instance.OnPlayerHit += PlayerTriggers_OnPlayerHit;
         if (Water.Instance != null)
         {
             Water.Instance.OnPlayerTouchedWater += Instance_OnPlayedTouchedWater;
         }
+    }
+
+    private void PlayerTriggers_OnPlayerHit(object sender, System.EventArgs e)
+    {
+        float bleedingDuration = 0.20f;
+        StartCoroutine(PlayerDying(bleedingDuration));
     }
 
     private void Instance_OnPlayedTouchedWater(object sender, System.EventArgs e)
@@ -45,6 +48,11 @@ public class GameManager : MonoBehaviour
     private void Player2DMovement_OnFinishPlatformReached(object sender, System.EventArgs e)
     {
         EndGame();
+    }
+    private void ExplodeAction_OnPlayerExploded(Vector3 obj)
+    {
+        float explodingDuration = 1.2f;
+        StartCoroutine(PlayerDying(explodingDuration));
     }
 
     private void EndGame()

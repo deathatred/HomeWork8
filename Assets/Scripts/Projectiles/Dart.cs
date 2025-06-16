@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Dart : ProjectileBase
 {
     [SerializeField] private float _speed = 20f;
     private Vector3 _direction;
+    public static event EventHandler OnPlayerHit;
 
     private int _damage = 1;
     protected override int Damage { get => _damage;
@@ -33,5 +35,4 @@ public class Dart : ProjectileBase
     {
         transform.position += _direction * _speed * Time.deltaTime;
     }
-
 }

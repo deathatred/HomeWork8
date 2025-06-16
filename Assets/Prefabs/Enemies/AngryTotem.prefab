@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5097038948572490121}
   - component: {fileID: 7923810363190436805}
+  - component: {fileID: 98585436708676359}
   m_Layer: 0
   m_Name: AngryTotemVisual
   m_TagString: Untagged
@@ -87,6 +88,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &98585436708676359
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3785502447537039384}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1074f65ab3c4c1444adfc0a51e75c566, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4456424956822987222
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,3 +156,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectilePrefab: {fileID: 3474421894883401151, guid: 056239fef62fa2f498b63c7e4401b470, type: 3}
+  _spriteRenderer: {fileID: 7923810363190436805}
+  _animator: {fileID: 98585436708676359}

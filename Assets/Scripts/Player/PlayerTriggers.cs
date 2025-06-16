@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPowerupsPickup : MonoBehaviour
+public class PlayerTriggers : MonoBehaviour
 {
-    public static PlayerPowerupsPickup Instance { get; private set; }
+    public static PlayerTriggers Instance { get; private set; }
     public event Action<PowerupsSO> OnPowerupPicked;
+    public event EventHandler OnPlayerHit;
     public event Action<PowerupsSO> OnPowerupRefreshed;
     private readonly Dictionary<PowerupsSO, PowerupBase> _activePowerups = new();
 
@@ -44,8 +45,12 @@ public class PlayerPowerupsPickup : MonoBehaviour
                         OnPowerupPicked?.Invoke(powerup.GetPowerupSO());
                     }
                 }
-
-                }
+            }
+        }
+        if (collision.TryGetComponent<ProjectileBase>(out var projectile))
+        {
+            Destroy(collision.gameObject);
+            OnPlayerHit?.Invoke(this,EventArgs.Empty);
         }
     }
 }

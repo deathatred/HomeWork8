@@ -48,4 +48,8 @@ public class Platform : MonoBehaviour, IHasHealth
     {
         _hasSpawnedObject = true;
     }
+    public bool GetHasSpawnedObject()
+    {
+        return _hasSpawnedObject;
+    }
 }

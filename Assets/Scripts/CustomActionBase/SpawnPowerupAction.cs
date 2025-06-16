@@ -10,14 +10,14 @@ public class SpawnPowerUpAction : ActionBase
 
     protected override void ExecuteInternal()
     {
+        Platform platform = transform.GetComponent<Platform>();
         float chance = 0.02f;
 
-        if (Random.value < chance)
+        if (Random.value < chance && !platform.GetHasSpawnedObject())
         {
             int powerupsCount = _powerupList.PowerupList.Count;
             _powerupGameObject = Instantiate(_powerupList.PowerupList[Random.Range(0, powerupsCount)].PowerupPrefab,
                 _spawnPowerupLocation.position, Quaternion.identity);
-            Platform platform = transform.GetComponent<Platform>();
             platform.SetHasSpawnedObject();
         }
     }

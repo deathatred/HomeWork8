@@ -3,12 +3,21 @@ using UnityEngine;
 public class AngryTotem : EnemyBase
 {
     [SerializeField] private GameObject _projectilePrefab;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Animator _animator;
+
+    public static int AttackHash = Animator.StringToHash("Attack");
+    public static int BlinkHash = Animator.StringToHash("Blink");
+
     private string _name = "AngryTotem";
     private int _damage = 5;
     private int _startHealth = 1;
     private GameObject _target;
     private float _attackTimer;
-    private float _attackTimerMax = 1.5f;
+    private float _attackTimerMax = 3f;
+
+    private bool _hasBlinked;
+
     protected override string Name { get => _name; set => _name = value.ToString(); }
     protected override int StartHealth { get => _startHealth; }
     protected override int Damage
@@ -24,13 +33,22 @@ public class AngryTotem : EnemyBase
     {
         base.Start();
         _target = GameObject.FindWithTag("Player");
+        _attackTimer = _attackTimerMax;
     }
     private void Update()
     {
-        if (_attackTimer <= 0)
+        if (_attackTimer <= 0 && _spriteRenderer.isVisible)
         {
+            _animator.SetTrigger(AttackHash);
             Attack();
             _attackTimer = _attackTimerMax;
+            _hasBlinked = false;
+        }
+        if (!_hasBlinked && _attackTimer <= _attackTimerMax/2)
+        {
+            _animator.SetTrigger(BlinkHash);
+            _hasBlinked = true;
+
         }
         _attackTimer -= Time.deltaTime;
 
