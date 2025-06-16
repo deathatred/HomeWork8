@@ -6,6 +6,7 @@ public class SpawnPowerUpAction : ActionBase
 {
     [SerializeField] private Transform _spawnPowerupLocation;
     [SerializeField] private PowerupsListSO _powerupList;
+    private GameObject _powerupGameObject;
 
     protected override void ExecuteInternal()
     {
@@ -14,7 +15,11 @@ public class SpawnPowerUpAction : ActionBase
         if (Random.value < chance)
         {
             int powerupsCount = _powerupList.PowerupList.Count;
-            Instantiate(_powerupList.PowerupList[Random.Range(0, powerupsCount)].PowerupPrefab, _spawnPowerupLocation.position, Quaternion.identity);
+            _powerupGameObject = Instantiate(_powerupList.PowerupList[Random.Range(0, powerupsCount)].PowerupPrefab, _spawnPowerupLocation.position, Quaternion.identity);
         }
+    }
+    private void OnDestroy()
+    {
+        Destroy(_powerupGameObject);
     }
 }

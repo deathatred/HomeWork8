@@ -26,7 +26,6 @@ public class Water : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print("ENTER?");
         if (other.gameObject.CompareTag("Player"))
         {
             OnPlayerTouchedWater?.Invoke(this, EventArgs.Empty);
