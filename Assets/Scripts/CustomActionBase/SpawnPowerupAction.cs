@@ -15,7 +15,10 @@ public class SpawnPowerUpAction : ActionBase
         if (Random.value < chance)
         {
             int powerupsCount = _powerupList.PowerupList.Count;
-            _powerupGameObject = Instantiate(_powerupList.PowerupList[Random.Range(0, powerupsCount)].PowerupPrefab, _spawnPowerupLocation.position, Quaternion.identity);
+            _powerupGameObject = Instantiate(_powerupList.PowerupList[Random.Range(0, powerupsCount)].PowerupPrefab,
+                _spawnPowerupLocation.position, Quaternion.identity);
+            Platform platform = transform.GetComponent<Platform>();
+            platform.SetHasSpawnedObject();
         }
     }
     private void OnDestroy()

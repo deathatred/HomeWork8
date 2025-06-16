@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Dart : ProjectileBase
 {
-    [SerializeField] private float _speed = 15f;
+    [SerializeField] private float _speed = 20f;
     private Vector3 _direction;
 
     private int _damage = 1;

@@ -7,6 +7,7 @@ public class Platform : MonoBehaviour, IHasHealth
     private int _health;
     protected Rigidbody2D _rb;
     protected bool _isAlive = true;
+    protected bool _hasSpawnedObject;
 
     private void Awake()
     {
@@ -42,5 +43,9 @@ public class Platform : MonoBehaviour, IHasHealth
         yield return new WaitForSeconds(delay);
         _rb.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
         //GetComponent<Collider2D>().enabled = false;
+    }
+    public void SetHasSpawnedObject()
+    {
+        _hasSpawnedObject = true;
     }
 }
