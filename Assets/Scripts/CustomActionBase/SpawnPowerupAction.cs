@@ -17,7 +17,7 @@ public class SpawnPowerUpAction : ActionBase
         {
             int powerupsCount = _powerupList.PowerupList.Count;
             _powerupGameObject = Instantiate(_powerupList.PowerupList[Random.Range(0, powerupsCount)].PowerupPrefab,
-                _spawnPowerupLocation.position, Quaternion.identity);
+                _spawnPowerupLocation.position, Quaternion.identity,platform.transform);
             platform.SetHasSpawnedObject();
         }
     }

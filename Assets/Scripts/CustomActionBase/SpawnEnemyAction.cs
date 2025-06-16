@@ -15,7 +15,7 @@ public class SpawnEnemyAction : ActionBase
         {
             int powerupsCount = _enemiesList.Count;
             _enemyGameObject = Instantiate(_enemiesList[Random.Range(0, powerupsCount)],
-            _spawnEnemyLocation.position, Quaternion.identity);
+            _spawnEnemyLocation.position, Quaternion.identity, platform.transform);
             platform.SetHasSpawnedObject();
         }
     }

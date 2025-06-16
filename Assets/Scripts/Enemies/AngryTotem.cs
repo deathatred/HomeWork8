@@ -50,6 +50,7 @@ public class AngryTotem : EnemyBase
             _hasBlinked = true;
 
         }
+        if (_spriteRenderer.isVisible)
         _attackTimer -= Time.deltaTime;
 
     }
