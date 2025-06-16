@@ -25,14 +25,20 @@ public class GameMessageUI : MonoBehaviour
     private void Start()
     {
         Player2DMovement.Instance.OnFinishPlatformReached += PlayerMovement_OnFinishPlatformReached;
+        PlayerTriggers.Instance.OnPlayerHit += PlayerTriggers_OnPlayerHit;
         if (Water.Instance != null)
         {
-          Water.Instance.OnPlayerTouchedWater += Instance_OnPlayedTouchedWater;
+          Water.Instance.OnPlayerTouchedWater += Water_OnPlayedTouchedWater;
         }
        
     }
 
-    private void Instance_OnPlayedTouchedWater(object sender, System.EventArgs e)
+    private void PlayerTriggers_OnPlayerHit(object sender, System.EventArgs e)
+    {
+        _gameOverMessage.gameObject.SetActive(true);
+    }
+
+    private void Water_OnPlayedTouchedWater(object sender, System.EventArgs e)
     {
         _gameOverMessage.gameObject.SetActive(true);
     }

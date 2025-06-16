@@ -7,6 +7,7 @@ public class PlayerTriggers : MonoBehaviour
     public static PlayerTriggers Instance { get; private set; }
     public event Action<PowerupsSO> OnPowerupPicked;
     public event EventHandler OnPlayerHit;
+    public event Action<PowerupsSO> OnPowerupRefreshed;
     private readonly Dictionary<PowerupsSO, PowerupBase> _activePowerups = new();
 
 

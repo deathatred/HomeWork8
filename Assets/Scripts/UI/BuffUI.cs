@@ -33,7 +33,7 @@ public class BuffUI : MonoBehaviour
 
     private void Start()
     {
-        PlayerPowerupsPickup.Instance.OnPowerupPicked += Instance_OnPowerupPicked;
+        PlayerTriggers.Instance.OnPowerupPicked += Instance_OnPowerupPicked;
     }
 
 
