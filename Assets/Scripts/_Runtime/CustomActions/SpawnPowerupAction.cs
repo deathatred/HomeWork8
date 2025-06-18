@@ -11,7 +11,7 @@ public class SpawnPowerUpAction : ActionBase
     protected override void ExecuteInternal()
     {
         Platform platform = transform.GetComponent<Platform>();
-        float chance = 1f;
+        float chance = 0.02f;
 
         if (Random.value < chance && !platform.GetHasSpawnedObject())
         {
