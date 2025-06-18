@@ -181,7 +181,7 @@ public class Player2DMovement : MonoBehaviour
 
     private void HandlePlayerRotation()
     {
-        float playerXScale = 5.15f;
+        float playerXScale = 1f;
         Vector2 moveInput = _playerMovementInput.MoveInput;
         if (moveInput.x > 0)
         {

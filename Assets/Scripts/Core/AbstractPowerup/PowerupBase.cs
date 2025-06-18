@@ -13,6 +13,8 @@ public abstract class PowerupBase : MonoBehaviour
 
     public virtual void PickUp(GameObject player)
     {
+        transform.SetParent(null);
+        Debug.Log($"[{name}] Picked up! Parent: {transform.parent?.name}");
         Activate(player);
         _isActive = true;
         GetComponent<Collider2D>().enabled = false;
@@ -20,10 +22,9 @@ public abstract class PowerupBase : MonoBehaviour
 
         _timeRemaining = Duration;
 
-        if (_lifetimeRoutine == null)
-        {
-            _lifetimeRoutine = StartCoroutine(DeactivateTimer(player));
-        }
+        if (_lifetimeRoutine != null) StopCoroutine(_lifetimeRoutine);
+
+        _lifetimeRoutine = StartCoroutine(DeactivateTimer(player));
     }
     public virtual void RefreshDuration(GameObject player)
     {
@@ -34,24 +35,25 @@ public abstract class PowerupBase : MonoBehaviour
     {
         while (_timeRemaining > 0)
         {
+            Debug.Log("Time remaining: " + _timeRemaining + " on " + name);
             _timeRemaining -= Time.deltaTime;
             yield return null;
         }
 
         Deactivate(player);
         _isActive = false;
+        _lifetimeRoutine = null;
         Destroy(gameObject);
+
     }
-    protected virtual IEnumerator DeactivateAfterTime(GameObject player)
-    {
-        print("started coroutine");
-        yield return new WaitForSeconds(Duration);
-        Deactivate(player);
-        _isActive = false;
-        Destroy(gameObject);
-    }
+
     public PowerupsSO GetPowerupSO()
     {
         return _powerupsSO;
     }
+    void OnDestroy()
+    {
+        Debug.Log($"[{name}] destroyed at time: {Time.time}");
+    }
 }
+

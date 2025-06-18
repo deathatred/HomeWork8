@@ -11,7 +11,7 @@ public class SpawnPowerUpAction : ActionBase
     protected override void ExecuteInternal()
     {
         Platform platform = transform.GetComponent<Platform>();
-        float chance = 0.02f;
+        float chance = 1f;
 
         if (Random.value < chance && !platform.GetHasSpawnedObject())
         {
@@ -20,9 +20,5 @@ public class SpawnPowerUpAction : ActionBase
                 _spawnPowerupLocation.position, Quaternion.identity,platform.transform);
             platform.SetHasSpawnedObject();
         }
-    }
-    private void OnDestroy()
-    {
-        Destroy(_powerupGameObject);
     }
 }

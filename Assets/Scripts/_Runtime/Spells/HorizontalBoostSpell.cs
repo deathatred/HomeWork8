@@ -51,10 +51,10 @@ public class HorizontalBoostSpell : BaseSpell
     {
         //also need to propel a bit up if idle(!) and freeze while spinning
         Transform playerTransform = GameObject.FindWithTag("Player").transform;
-        Rigidbody2D playerRb = playerTransform.GetComponent<Rigidbody2D>();
-        PlayerEffects playerEffects = playerTransform.GetComponent<PlayerEffects>();
+        Rigidbody2D playerRb = playerTransform.GetComponentInParent<Rigidbody2D>();
+        PlayerEffects playerEffects = playerTransform.GetComponentInParent<PlayerEffects>();
         playerEffects.EnableTrail();
-        PlayerAnimation playerAnim = playerTransform.GetComponent<PlayerAnimation>();
+        PlayerAnimation playerAnim = playerTransform.GetComponentInParent<PlayerAnimation>();
         playerAnim.SetIsSpinning(false);
         playerRb.gravityScale = 5f;
         float jumpForce = 60f;
