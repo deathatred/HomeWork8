@@ -1746,7 +1746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5316aea9b08513c49b8c04bb8e6f8c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1097991366}
 --- !u!4 &1224159937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9219380540708077926, guid: 693451f842a63af449548b7e084d14d6, type: 3}
@@ -2670,6 +2669,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1477246003112106360, guid: bb0eea397fdd7274aa944bb34d2a162a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 1488780443184321330, guid: bb0eea397fdd7274aa944bb34d2a162a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2713,10 +2716,6 @@ PrefabInstance:
     - target: {fileID: 6172674832531407825, guid: bb0eea397fdd7274aa944bb34d2a162a, type: 3}
       propertyPath: m_Name
       value: PlayerNew
-      objectReference: {fileID: 0}
-    - target: {fileID: 6172674832531407825, guid: bb0eea397fdd7274aa944bb34d2a162a, type: 3}
-      propertyPath: m_TagString
-      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

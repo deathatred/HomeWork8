@@ -14,7 +14,6 @@ public abstract class PowerupBase : MonoBehaviour
     public virtual void PickUp(GameObject player)
     {
         transform.SetParent(null);
-        Debug.Log($"[{name}] Picked up! Parent: {transform.parent?.name}");
         Activate(player);
         _isActive = true;
         GetComponent<Collider2D>().enabled = false;
