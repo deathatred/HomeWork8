@@ -35,7 +35,6 @@ public abstract class PowerupBase : MonoBehaviour
     {
         while (_timeRemaining > 0)
         {
-            Debug.Log("Time remaining: " + _timeRemaining + " on " + name);
             _timeRemaining -= Time.deltaTime;
             yield return null;
         }
@@ -50,10 +49,6 @@ public abstract class PowerupBase : MonoBehaviour
     public PowerupsSO GetPowerupSO()
     {
         return _powerupsSO;
-    }
-    void OnDestroy()
-    {
-        Debug.Log($"[{name}] destroyed at time: {Time.time}");
     }
 }
 

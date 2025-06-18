@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }    
-    [SerializeField] private GameObject _player;
+    private GameObject _player;
     public bool IsPlayerDead { get; private set; }
     private void OnEnable()
     {
@@ -67,7 +67,10 @@ public class GameManager : MonoBehaviour
         //BlockInput 
         IsPlayerDead = true;
         InputHandler playerInput = _player.GetComponent<InputHandler>();
-        playerInput.enabled = false;
+        if (playerInput != null)
+        {
+            playerInput.enabled = false;
+        }
         yield return new WaitForSeconds(duration);
         EndGame();
     }
