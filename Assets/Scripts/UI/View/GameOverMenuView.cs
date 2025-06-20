@@ -23,23 +23,31 @@ public class GameOverMenuView : MonoBehaviour
     }
     private void SetBestDistanceText()
     {
-        _bestDistanceText.text = $"Best distance: {CharacterModel.Distance}";
+        _bestDistanceText.text = $"Best distance: {PlayerPrefsManager.GetRecordDistance()}";
     }
     private void SubscribeToEvents()
     {
         _menuButton.onClick.AddListener(() =>
         {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(
+     UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
             GameEventBus.MenuButtonClicked();
         });
         _restartButton.onClick.AddListener(() =>
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(
       UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+            GameEventBus.RestartClicked();
         });
+        GameEventBus.OnDistanceChanged += GameEventBusOnDistanceChanged;
     }
     private void UnsubscribeFromEvents()
     {
         _menuButton.onClick.RemoveAllListeners();
         _restartButton?.onClick.RemoveAllListeners();
+    }
+    private void GameEventBusOnDistanceChanged(int obj)
+    {
+        SetBestDistanceText();
     }
 }

@@ -2,13 +2,15 @@ using System;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
-public class GameEventBus : MonoBehaviour
+public static class GameEventBus
 {
     public static event Action<int> OnDistanceChanged;
     public static event Action<PowerupsSO> OnPowerupPickedup;
     public static event Action OnMenuButtonClicked;
     public static event Action OnStartGameButtonClicked;
     public static event Action<int> OnCanvasChanged;
+    public static event Action OnPlayerDead;
+    public static event Action OnRestartButtonClicked;
 
     public static void ChangeDistance(int newDistance)
     {
@@ -29,5 +31,13 @@ public class GameEventBus : MonoBehaviour
     public static void CanvasChanged(int id)
     {
         OnCanvasChanged?.Invoke(id);
+    }
+    public static void PlayerDead()
+    {
+        OnPlayerDead?.Invoke();
     } 
+    public static void RestartClicked()
+    {
+        OnRestartButtonClicked?.Invoke();
+    }
 }

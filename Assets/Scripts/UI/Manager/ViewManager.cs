@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class ViewManager : MonoBehaviour
 {
-    [SerializeField] private List<Canvas> _views;
+    [SerializeField] private List<Canvas> _views = new();
+    private static bool _gameWasRestarted;
 
     private void OnEnable()
     {
@@ -11,7 +12,16 @@ public class ViewManager : MonoBehaviour
     }
     private void Start()
     {
-        ChangeCanvas(1);
+        if (ViewManager._gameWasRestarted)
+        {
+            ChangeCanvas(0);
+            ViewManager._gameWasRestarted = false;
+        }
+        else
+        {
+            print("HERE");
+            ChangeCanvas(1);
+        }
     }
     private void OnDisable()
     {
@@ -35,6 +45,19 @@ public class ViewManager : MonoBehaviour
     {
         GameEventBus.OnMenuButtonClicked += GameEventBusOnMenuButtonClicked;
         GameEventBus.OnStartGameButtonClicked += GameEventBusOnStartGameButtonClicked;
+        GameEventBus.OnPlayerDead += GameEventBusOnPlayerDead;
+        GameEventBus.OnRestartButtonClicked += GameEventBusOnRestartButtonClicked;
+    }
+
+    private void GameEventBusOnRestartButtonClicked()
+    {
+        ViewManager._gameWasRestarted = true;
+        print("HERE IM GAE");
+    }
+
+    private void GameEventBusOnPlayerDead()
+    {
+        ChangeCanvas(2);
     }
 
     private void GameEventBusOnStartGameButtonClicked()
@@ -45,6 +68,9 @@ public class ViewManager : MonoBehaviour
     private void UnsubscribeFromEvents()
     {
         GameEventBus.OnMenuButtonClicked -= GameEventBusOnMenuButtonClicked;
+        GameEventBus.OnStartGameButtonClicked -= GameEventBusOnStartGameButtonClicked;
+        GameEventBus.OnPlayerDead -= GameEventBusOnPlayerDead;
+        GameEventBus.OnRestartButtonClicked -= GameEventBusOnRestartButtonClicked;
     }
 
     private void GameEventBusOnMenuButtonClicked()

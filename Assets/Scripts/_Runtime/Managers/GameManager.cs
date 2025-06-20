@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -63,6 +64,7 @@ public class GameManager : MonoBehaviour
             Water.Instance.OnPlayerTouchedWater += WaterOnPlayedTouchedWater;
         }
         GameEventBus.OnCanvasChanged += GameEventBusOnCanvasChanged;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
     private void UnsubscribeFromEvents()
     {
@@ -74,6 +76,7 @@ public class GameManager : MonoBehaviour
             Water.Instance.OnPlayerTouchedWater -= WaterOnPlayedTouchedWater;
         }
         GameEventBus.OnCanvasChanged -= GameEventBusOnCanvasChanged;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     private IEnumerator PlayerDying(float duration)
     {
@@ -85,7 +88,7 @@ public class GameManager : MonoBehaviour
             playerInput.enabled = false;
         }
         yield return new WaitForSeconds(duration);
-        EndGame();
+        GameEventBus.PlayerDead();
     }
 
     private void GameEventBusOnCanvasChanged(int id)
@@ -99,6 +102,10 @@ public class GameManager : MonoBehaviour
             case 2:
                 Time.timeScale = 0; break;
         }
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        CharacterModel.ResetStats();
     }
 
 }

@@ -245,7 +245,13 @@ public class Player2DMovement : MonoBehaviour
     }
     private void SignalWhenDistanceChanged()
     {
-        CharacterModel.Distance = CalculateDistance(transform.position.y, CharacterModel.Distance);
-        GameEventBus.ChangeDistance(CharacterModel.Distance);
+        int newDistance = CalculateDistance(transform.position.y, CharacterModel.Distance);
+        print(CharacterModel.Distance);
+        if (newDistance != CharacterModel.Distance)
+        {
+            CharacterModel.Distance = newDistance;
+            PlayerPrefsManager.SaveRecordDistance(newDistance);
+            GameEventBus.ChangeDistance(newDistance);
+        }
     }
 }
