@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -68,6 +69,8 @@ public class Player2DMovement : MonoBehaviour
         }
         HandlePlayerRotation();
         HandlePlayerStates();
+        SignalWhenDistanceChanged();
+
     }
     private void OnDrawGizmosSelected()
     {
@@ -230,5 +233,19 @@ public class Player2DMovement : MonoBehaviour
     public void SetPlayerSpeed(float amount)
     {
         _moveSpeed = amount;
+    }
+    private int CalculateDistance(float currentDistance, int charDistance)
+    {
+        if ((int)currentDistance > charDistance)
+        {
+            return (int)currentDistance;
+        }
+
+        return charDistance;
+    }
+    private void SignalWhenDistanceChanged()
+    {
+        CharacterModel.Distance = CalculateDistance(transform.position.y, CharacterModel.Distance);
+        GameEventBus.ChangeDistance(CharacterModel.Distance);
     }
 }

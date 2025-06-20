@@ -14,7 +14,13 @@ public class ActiveBuffData
 public class BuffUI : MonoBehaviour
 {
     private readonly Dictionary<PowerupsSO, ActiveBuffData> _activeBuffs= new Dictionary<PowerupsSO, ActiveBuffData>();
-    private void Instance_OnPowerupPicked(PowerupsSO obj)
+   
+
+    private void Start()
+    {
+        GameEventBus.OnPowerupPickedup += GameEventBusOnPowerupPicked;
+    }
+    private void GameEventBusOnPowerupPicked(PowerupsSO obj)
     {
         if (_activeBuffs.TryGetValue(obj, out var oldData))
         {
@@ -30,12 +36,6 @@ public class BuffUI : MonoBehaviour
             Icon = newIcon
         };
     }
-
-    private void Start()
-    {
-        PlayerTriggers.Instance.OnPowerupPicked += Instance_OnPowerupPicked;
-    }
-
 
     private IEnumerator ShowBuffIcon(Image powerupIcon, float duration)
     {

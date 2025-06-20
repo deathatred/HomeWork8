@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerTriggers : MonoBehaviour
 {
     public static PlayerTriggers Instance { get; private set; }
-    public event Action<PowerupsSO> OnPowerupPicked;
     public event EventHandler OnPlayerHit;
     private readonly Dictionary<PowerupsSO, PowerupBase> _activePowerups = new();
 
@@ -25,7 +24,7 @@ public class PlayerTriggers : MonoBehaviour
                 {
                     _activePowerups.Add(powerupSO, powerup);
                     powerup.PickUp(gameObject);
-                    OnPowerupPicked?.Invoke(powerup.GetPowerupSO());
+                    GameEventBus.PowerupPickedUp(powerupSO);
                 }
                 else
                 {
@@ -35,13 +34,13 @@ public class PlayerTriggers : MonoBehaviour
                         _activePowerups.Remove(powerupSO);
                         _activePowerups.Add(powerupSO, powerup);
                         powerup.PickUp(gameObject);
-                        OnPowerupPicked?.Invoke(powerup.GetPowerupSO());
+                        GameEventBus.PowerupPickedUp(powerupSO);
                     }
                     else
                     {
                         _activePowerups[powerupSO].RefreshDuration(gameObject);
                         Destroy(collision.gameObject);
-                        OnPowerupPicked?.Invoke(powerup.GetPowerupSO());
+                        GameEventBus.PowerupPickedUp(powerupSO);
                     }
                 }
             }
