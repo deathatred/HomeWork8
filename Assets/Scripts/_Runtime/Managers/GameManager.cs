@@ -4,27 +4,19 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }    
+    public static GameManager Instance { get; private set; }
     private GameObject _player;
     public bool IsPlayerDead { get; private set; }
     private void OnEnable()
     {
-        ExplodeAction.OnPlayerExploded += ExplodeActionOnPlayerExploded;
-        Player2DMovement.Instance.OnFinishPlatformReached += Player2DMovementOnFinishPlatformReached;
-        PlayerTriggers.Instance.OnPlayerHit += PlayerTriggersOnPlayerHit;
-        if (Water.Instance != null)
-        {
-            Water.Instance.OnPlayerTouchedWater += WaterOnPlayedTouchedWater;
-        }
+        SubscribeToEvents();
 
     }
     private void OnDisable()
     {
-        ExplodeAction.OnPlayerExploded -= ExplodeActionOnPlayerExploded;
-        Player2DMovement.Instance.OnFinishPlatformReached -= Player2DMovementOnFinishPlatformReached;
-        PlayerTriggers.Instance.OnPlayerHit -= PlayerTriggersOnPlayerHit;
-        Water.Instance.OnPlayerTouchedWater -= WaterOnPlayedTouchedWater;
+        UnsubscribeFromEvents();
     }
+
     private void Awake()
     {
         Instance = this;
@@ -61,7 +53,28 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
     }
-
+    private void SubscribeToEvents()
+    {
+        ExplodeAction.OnPlayerExploded += ExplodeActionOnPlayerExploded;
+        Player2DMovement.Instance.OnFinishPlatformReached += Player2DMovementOnFinishPlatformReached;
+        PlayerTriggers.Instance.OnPlayerHit += PlayerTriggersOnPlayerHit;
+        if (Water.Instance != null)
+        {
+            Water.Instance.OnPlayerTouchedWater += WaterOnPlayedTouchedWater;
+        }
+        GameEventBus.OnCanvasChanged += GameEventBusOnCanvasChanged;
+    }
+    private void UnsubscribeFromEvents()
+    {
+        ExplodeAction.OnPlayerExploded -= ExplodeActionOnPlayerExploded;
+        Player2DMovement.Instance.OnFinishPlatformReached -= Player2DMovementOnFinishPlatformReached;
+        PlayerTriggers.Instance.OnPlayerHit -= PlayerTriggersOnPlayerHit;
+        if (Water.Instance != null)
+        {
+            Water.Instance.OnPlayerTouchedWater -= WaterOnPlayedTouchedWater;
+        }
+        GameEventBus.OnCanvasChanged -= GameEventBusOnCanvasChanged;
+    }
     private IEnumerator PlayerDying(float duration)
     {
         //BlockInput 
@@ -74,4 +87,18 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         EndGame();
     }
+
+    private void GameEventBusOnCanvasChanged(int id)
+    {
+        switch (id)
+        {
+            case 0:
+                Time.timeScale = 1; break;
+            case 1:
+                Time.timeScale = 0; break;
+            case 2:
+                Time.timeScale = 0; break;
+        }
+    }
+
 }

@@ -11,7 +11,7 @@ public class ViewManager : MonoBehaviour
     }
     private void Start()
     {
-        ChangeCanvas(0);
+        ChangeCanvas(1);
     }
     private void OnDisable()
     {
@@ -29,11 +29,19 @@ public class ViewManager : MonoBehaviour
             canvas.enabled = false;
         }
         _views[id].enabled = true;
+        GameEventBus.CanvasChanged(id); 
     }
     private void SubscribeToEvents()
     {
         GameEventBus.OnMenuButtonClicked += GameEventBusOnMenuButtonClicked;
+        GameEventBus.OnStartGameButtonClicked += GameEventBusOnStartGameButtonClicked;
     }
+
+    private void GameEventBusOnStartGameButtonClicked()
+    {
+        ChangeCanvas(0);
+    }
+
     private void UnsubscribeFromEvents()
     {
         GameEventBus.OnMenuButtonClicked -= GameEventBusOnMenuButtonClicked;

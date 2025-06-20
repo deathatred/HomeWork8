@@ -40,11 +40,16 @@ public class GameView : MonoBehaviour
     {
         GameEventBus.OnDistanceChanged += GameEventBusOnDistanceChanged;
         GameEventBus.OnPowerupPickedup += GameEventBus_OnPowerupPickedup;
+        _menuButton.onClick.AddListener(() =>
+        {
+            GameEventBus.MenuButtonClicked();
+        });
     }
     private void UnsubscribeFromEvents()
     {
         GameEventBus.OnDistanceChanged -= GameEventBusOnDistanceChanged;
         GameEventBus.OnPowerupPickedup -= GameEventBus_OnPowerupPickedup;
+        _menuButton?.onClick.RemoveAllListeners();
     }
     private void ShowDefaults()
     {

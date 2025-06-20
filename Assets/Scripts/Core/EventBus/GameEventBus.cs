@@ -7,6 +7,8 @@ public class GameEventBus : MonoBehaviour
     public static event Action<int> OnDistanceChanged;
     public static event Action<PowerupsSO> OnPowerupPickedup;
     public static event Action OnMenuButtonClicked;
+    public static event Action OnStartGameButtonClicked;
+    public static event Action<int> OnCanvasChanged;
 
     public static void ChangeDistance(int newDistance)
     {
@@ -20,4 +22,12 @@ public class GameEventBus : MonoBehaviour
     {
         OnMenuButtonClicked?.Invoke();
     }
+    public static void StartGameButtonClicked()
+    {
+        OnStartGameButtonClicked?.Invoke();
+    }
+    public static void CanvasChanged(int id)
+    {
+        OnCanvasChanged?.Invoke(id);
+    } 
 }
