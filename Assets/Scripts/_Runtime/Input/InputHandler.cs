@@ -27,11 +27,8 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
         {
             Debug.LogError("there are 2 instances of Input Handler");
         }
-
-        //_inputActions = new PlayerInputActions();
         _inputActions = InputManager.Actions;
-        _playerState = GetComponent<PlayerState>();
-       
+        _playerState = GetComponent<PlayerState>();     
     }
     void OnEnable()
     {

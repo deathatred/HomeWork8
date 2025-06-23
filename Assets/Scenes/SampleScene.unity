@@ -4517,10 +4517,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce46d7e1d5577f42ae54e88d5330eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bindingIndex: 0
-  bindText: {fileID: 218261942}
-  rebindButton: {fileID: 641653400}
-  actionRef: {fileID: 7712639662452355927, guid: 73c882d9b1ea12646ab0f40f81bb628e, type: 3}
+  _bindingIndex: 0
+  _bindText: {fileID: 218261942}
+  _rebindButton: {fileID: 641653400}
+  _actionRef: {fileID: 7712639662452355927, guid: 73c882d9b1ea12646ab0f40f81bb628e, type: 3}
 --- !u!1 &1397107391
 GameObject:
   m_ObjectHideFlags: 0
@@ -6922,10 +6922,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce46d7e1d5577f42ae54e88d5330eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bindingIndex: 0
-  bindText: {fileID: 258463263}
-  rebindButton: {fileID: 1901564286}
-  actionRef: {fileID: -8035614639338896289, guid: 73c882d9b1ea12646ab0f40f81bb628e, type: 3}
+  _bindingIndex: 0
+  _bindText: {fileID: 258463263}
+  _rebindButton: {fileID: 1901564286}
+  _actionRef: {fileID: -8035614639338896289, guid: 73c882d9b1ea12646ab0f40f81bb628e, type: 3}
 --- !u!114 &1877529412
 MonoBehaviour:
   m_ObjectHideFlags: 0

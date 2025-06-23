@@ -5,24 +5,32 @@ using TMPro;
 
 public class RebindUI : MonoBehaviour
 {
-    [SerializeField] private int bindingIndex = 0;
-    [SerializeField] private TextMeshProUGUI bindText;
-    [SerializeField] private Button rebindButton;
-    [SerializeField] private InputActionReference actionRef;
+    [SerializeField] private int _bindingIndex = 0;
+    [SerializeField] private TextMeshProUGUI _bindText;
+    [SerializeField] private Button _rebindButton;
+    [SerializeField] private InputActionReference _actionRef;
 
-    private InputAction action => InputManager.Actions.FindAction(actionRef.name);
+    private InputAction action => InputManager.Actions.FindAction(_actionRef.name);
 
     private void Awake()
     {
-        string saved = PlayerPrefs.GetString(action.id + "_" + bindingIndex, "");
+        string saved = PlayerPrefs.GetString(action.id + "_" + _bindingIndex, "");
         if (!string.IsNullOrEmpty(saved))
-            action.ApplyBindingOverride(bindingIndex, saved);
+            action.ApplyBindingOverride(_bindingIndex, saved);
+    }
+    private void OnEnable()
+    {
+        SubscribeToEvents();
     }
     private void Start()
     {
         RebindRegistry.Register(this);
         ShowBinding();
-        rebindButton.onClick.AddListener(StartRebind);
+
+    }
+    private void OnDisable()
+    {
+        UnsubscribeFromEvents();
     }
     private void OnDestroy()
     {
@@ -31,35 +39,36 @@ public class RebindUI : MonoBehaviour
 
     private void ShowBinding()
     {
-        var b = action.bindings[bindingIndex];
-        bindText.text = InputControlPath.ToHumanReadableString(
+        var b = action.bindings[_bindingIndex];
+        _bindText.text = InputControlPath.ToHumanReadableString(
             b.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
     }
 
+
     private void StartRebind()
     {
-        rebindButton.interactable = false;
+        _rebindButton.interactable = false;
         action.Disable();
         GameEventBus.StartRebind();
-        action.PerformInteractiveRebinding(bindingIndex)
+        action.PerformInteractiveRebinding(_bindingIndex)
             .WithCancelingThrough("<Keyboard>/escape")
             .OnCancel(op =>
             {
                 action.Enable();
-                rebindButton.interactable = true;
+                _rebindButton.interactable = true;
                 GameEventBus.FinishRebind();
             })
             .OnComplete(op =>
             {
                 op.Dispose();
                 action.Enable();
-                rebindButton.interactable = true;
+                _rebindButton.interactable = true;
                 ShowBinding();
                 SaveBinding();
-                InputManager.RaiseBindingChanged(action, bindingIndex);
+                InputManager.RaiseBindingChanged(action, _bindingIndex);
                 GameEventBus.FinishRebind();
-                OnRebindComplete(action, bindingIndex);
-                InputManager.RaiseBindingChanged(action, bindingIndex);
+                OnRebindComplete(action, _bindingIndex);
+                InputManager.RaiseBindingChanged(action, _bindingIndex);
                 GameEventBus.FinishRebind();
             })
             .Start();
@@ -68,8 +77,8 @@ public class RebindUI : MonoBehaviour
     private void SaveBinding()
     {
         PlayerPrefs.SetString(
-            action.id + "_" + bindingIndex,
-            action.bindings[bindingIndex].overridePath);
+            action.id + "_" + _bindingIndex,
+            action.bindings[_bindingIndex].overridePath);
         PlayerPrefs.Save();
     }
 
@@ -79,8 +88,9 @@ public class RebindUI : MonoBehaviour
         foreach (var otherAction in InputManager.Actions)
         {
             if (otherAction == action)
+            {
                 continue;
-
+            }            
             for (int i = 0; i < otherAction.bindings.Count; i++)
             {
                 var binding = otherAction.bindings[i];
@@ -88,13 +98,12 @@ public class RebindUI : MonoBehaviour
                 {
                     if (!string.IsNullOrEmpty(binding.overridePath))
                     {
-                        otherAction.RemoveBindingOverride(i);
+                        otherAction.ApplyBindingOverride(i, "");
                         foreach (var ui in RebindRegistry.AllRebinds)
                         {
-                            if (ui.actionRef.action.name == otherAction.name && ui.bindingIndex == i)
+                            if (ui._actionRef.action.name == otherAction.name && ui._bindingIndex == i)
                             {
-                                print("KYS");
-                                ui.RefreshBindingDisplay();
+                                ui.Clear();
                             }
                         }
                     }
@@ -106,7 +115,19 @@ public class RebindUI : MonoBehaviour
     public void RefreshBindingDisplay()
     {
         SaveBinding();
-        ShowBinding();    
+        ShowBinding();
+    }
+    public void Clear()
+    {
+        _bindText.text = string.Empty;
+    }
+    private void SubscribeToEvents()
+    {
+        _rebindButton.onClick.AddListener(StartRebind);
+    }
+    private void UnsubscribeFromEvents()
+    {
+        _rebindButton.onClick.RemoveAllListeners();
     }
 
 }
