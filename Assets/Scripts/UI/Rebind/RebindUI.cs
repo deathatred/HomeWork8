@@ -103,7 +103,7 @@ public class RebindUI : MonoBehaviour
                         {
                             if (ui._actionRef.action.name == otherAction.name && ui._bindingIndex == i)
                             {
-                                ui.Clear();
+                                ui.ClearText();
                             }
                         }
                     }
@@ -117,7 +117,7 @@ public class RebindUI : MonoBehaviour
         SaveBinding();
         ShowBinding();
     }
-    public void Clear()
+    public void ClearText()
     {
         _bindText.text = string.Empty;
     }
