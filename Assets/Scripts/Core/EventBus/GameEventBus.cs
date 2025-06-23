@@ -13,6 +13,8 @@ public static class GameEventBus
     public static event Action<BackButtonContext> OnBackButtonClicked;
     public static event Action OnSettingButtonClicked;
     public static event Action<int> OnCanvasChanged;
+    public static event Action OnRebindStarted;
+    public static event Action OnRebindFinished;    
     //In Game Events
     public static event Action OnPlayerDead;
     public static event Action<int> OnDistanceChanged;
@@ -62,5 +64,13 @@ public static class GameEventBus
     public static void SettingButtonClick()
     {
         OnSettingButtonClicked?.Invoke();
+    }
+    public static void StartRebind()
+    {
+        OnRebindStarted?.Invoke();
+    }
+    public static void FinishRebind()
+    {
+        OnRebindFinished?.Invoke();
     }
 }

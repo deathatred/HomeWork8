@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 
+[DefaultExecutionOrder(-5)]
 public class InputManager : MonoBehaviour
 {
     public static PlayerInputActions Actions { get; private set; }

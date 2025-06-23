@@ -12,10 +12,21 @@ public class RebindUI : MonoBehaviour
 
     private InputAction action => InputManager.Actions.FindAction(actionRef.name);
 
+    private void Awake()
+    {
+        string saved = PlayerPrefs.GetString(action.id + "_" + bindingIndex, "");
+        if (!string.IsNullOrEmpty(saved))
+            action.ApplyBindingOverride(bindingIndex, saved);
+    }
     private void Start()
     {
+        RebindRegistry.Register(this);
         ShowBinding();
         rebindButton.onClick.AddListener(StartRebind);
+    }
+    private void OnDestroy()
+    {
+        RebindRegistry.Unregister(this);
     }
 
     private void ShowBinding()
@@ -29,13 +40,14 @@ public class RebindUI : MonoBehaviour
     {
         rebindButton.interactable = false;
         action.Disable();
-
+        GameEventBus.StartRebind();
         action.PerformInteractiveRebinding(bindingIndex)
             .WithCancelingThrough("<Keyboard>/escape")
             .OnCancel(op =>
             {
                 action.Enable();
                 rebindButton.interactable = true;
+                GameEventBus.FinishRebind();
             })
             .OnComplete(op =>
             {
@@ -44,7 +56,11 @@ public class RebindUI : MonoBehaviour
                 rebindButton.interactable = true;
                 ShowBinding();
                 SaveBinding();
-                InputManager.RaiseBindingChanged(action, bindingIndex);  // ← кидаємо івент
+                InputManager.RaiseBindingChanged(action, bindingIndex);
+                GameEventBus.FinishRebind();
+                OnRebindComplete(action, bindingIndex);
+                InputManager.RaiseBindingChanged(action, bindingIndex);
+                GameEventBus.FinishRebind();
             })
             .Start();
     }
@@ -57,10 +73,40 @@ public class RebindUI : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void Awake()
+    private void OnRebindComplete(InputAction action, int bindingIndex)
     {
-        string saved = PlayerPrefs.GetString(action.id + "_" + bindingIndex, "");
-        if (!string.IsNullOrEmpty(saved))
-            action.ApplyBindingOverride(bindingIndex, saved);
+        var newBindingPath = action.bindings[bindingIndex].effectivePath;
+        foreach (var otherAction in InputManager.Actions)
+        {
+            if (otherAction == action)
+                continue;
+
+            for (int i = 0; i < otherAction.bindings.Count; i++)
+            {
+                var binding = otherAction.bindings[i];
+                if (binding.effectivePath == newBindingPath)
+                {
+                    if (!string.IsNullOrEmpty(binding.overridePath))
+                    {
+                        otherAction.RemoveBindingOverride(i);
+                        foreach (var ui in RebindRegistry.AllRebinds)
+                        {
+                            if (ui.actionRef.action.name == otherAction.name && ui.bindingIndex == i)
+                            {
+                                print("KYS");
+                                ui.RefreshBindingDisplay();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+
+    public void RefreshBindingDisplay()
+    {
+        SaveBinding();
+        ShowBinding();    
+    }
+
 }

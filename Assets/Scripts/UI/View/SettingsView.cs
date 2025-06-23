@@ -8,6 +8,7 @@ public class SettingsView : MonoBehaviour
     [SerializeField] private Button _backButton;
     [SerializeField] private Button _musicPlusButton;
     [SerializeField] private Button _musicMinusButton;
+    [SerializeField] private Image _RebindBackground;
 
     private int _musicIndex;
     private float _musicDefault = 0.5f;
@@ -54,8 +55,9 @@ public class SettingsView : MonoBehaviour
         {
             GameEventBus.BackButtonClick();
         });
+        GameEventBus.OnRebindStarted += GameEventBusOnRebindStarted;
+        GameEventBus.OnRebindFinished += GameEventBusOnRebindFinished;
     }
-
 
 
     private void UnsubscribeFromEvents()
@@ -63,6 +65,8 @@ public class SettingsView : MonoBehaviour
         _musicPlusButton.onClick.RemoveAllListeners();
         _musicMinusButton.onClick.RemoveAllListeners();
         _backButton?.onClick.RemoveAllListeners();
+        GameEventBus.OnRebindStarted -= GameEventBusOnRebindStarted;
+        GameEventBus.OnRebindFinished -= GameEventBusOnRebindFinished;
     }
     private void SetDefaults()
     {
@@ -70,4 +74,13 @@ public class SettingsView : MonoBehaviour
         _musicSettingText.text = $"MUSIC: {defaultMusicVolume}";
         _musicIndex = defaultMusicVolume;
     }
+    private void GameEventBusOnRebindStarted()
+    {
+        _RebindBackground.gameObject.SetActive(true);
+    }
+    private void GameEventBusOnRebindFinished()
+    {
+        _RebindBackground.gameObject.SetActive(false);
+    }
+
 }
