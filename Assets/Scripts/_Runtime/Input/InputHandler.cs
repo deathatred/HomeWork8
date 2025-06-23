@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionMapActions,
      PlayerInputActions.IPlayerActionMapActions
 {
+    public static InputHandler Instance { get; private set; }
     public bool FirstSpellPressed { get; private set; }
     public bool SecondSpellPressed { get; private set; }
     public Vector2 MoveInput { get; private set; }
@@ -18,7 +19,17 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
 
     private void Awake()
     {
-        _inputActions = new PlayerInputActions();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogError("there are 2 instances of Input Handler");
+        }
+
+        //_inputActions = new PlayerInputActions();
+        _inputActions = InputManager.Actions;
         _playerState = GetComponent<PlayerState>();
        
     }
@@ -115,5 +126,9 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
     public void SetJumpPressedFalse()
     {
         JumpPressed = false;
+    }
+    public PlayerInputActions GetPlayerInputActions()
+    {
+        return _inputActions;
     }
 }

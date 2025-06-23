@@ -22,16 +22,22 @@ public class MenuView : MonoBehaviour
     {
         _startGameButton.onClick.AddListener(() =>
         {
-        
-            GameEventBus.StartGameButtonClicked();
+
+            GameEventBus.StartGameButtonClick();
+        });
+        _settingsButton.onClick.AddListener(() =>
+        {
+            GameEventBus.SettingButtonClick();
         });
         GameEventBus.OnStartGameButtonClicked += GameEventBusOnStartGameButtonClicked;
         GameEventBus.OnPlayerDead += GameEventBusOnPlayerDead;
     }
-
     private void UnsubscribeFromEvents()
     {
         _startGameButton.onClick.RemoveAllListeners();
+        _settingsButton.onClick.RemoveAllListeners(); 
+        GameEventBus.OnStartGameButtonClicked -= GameEventBusOnStartGameButtonClicked;
+        GameEventBus.OnPlayerDead -= GameEventBusOnPlayerDead;
     }
     private void GameEventBusOnStartGameButtonClicked()
     {

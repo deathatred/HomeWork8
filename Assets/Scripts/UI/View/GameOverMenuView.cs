@@ -31,13 +31,13 @@ public class GameOverMenuView : MonoBehaviour
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(
      UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-            GameEventBus.MenuButtonClicked();
+            GameEventBus.MenuButtonClick();
         });
         _restartButton.onClick.AddListener(() =>
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(
       UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-            GameEventBus.RestartClicked();
+            GameEventBus.RestartClick();
         });
         GameEventBus.OnDistanceChanged += GameEventBusOnDistanceChanged;
     }
@@ -45,6 +45,7 @@ public class GameOverMenuView : MonoBehaviour
     {
         _menuButton.onClick.RemoveAllListeners();
         _restartButton?.onClick.RemoveAllListeners();
+        GameEventBus.OnDistanceChanged -= GameEventBusOnDistanceChanged;
     }
     private void GameEventBusOnDistanceChanged(int obj)
     {

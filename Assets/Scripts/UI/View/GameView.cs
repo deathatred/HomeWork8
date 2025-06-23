@@ -26,6 +26,24 @@ public class GameView : MonoBehaviour
     }
 
 
+ 
+    private void SubscribeToEvents()
+    {
+        GameEventBus.OnDistanceChanged += GameEventBusOnDistanceChanged;
+        GameEventBus.OnPowerupPickedup += GameEventBus_OnPowerupPickedup;
+        _menuButton.onClick.AddListener(() =>
+        {
+            GameEventBus.MenuButtonClick();
+        });
+    }
+
+
+    private void UnsubscribeFromEvents()
+    {
+        GameEventBus.OnDistanceChanged -= GameEventBusOnDistanceChanged;
+        GameEventBus.OnPowerupPickedup -= GameEventBus_OnPowerupPickedup;
+        _menuButton?.onClick.RemoveAllListeners();
+    }
     private void GameEventBus_OnPowerupPickedup(PowerupsSO obj)
     {
         CharacterModel.PowerupsCollected += 1;
@@ -35,21 +53,6 @@ public class GameView : MonoBehaviour
     private void GameEventBusOnDistanceChanged(int distance)
     {
         _distanceToFinishText.text = $"Distance: {distance}";
-    }
-    private void SubscribeToEvents()
-    {
-        GameEventBus.OnDistanceChanged += GameEventBusOnDistanceChanged;
-        GameEventBus.OnPowerupPickedup += GameEventBus_OnPowerupPickedup;
-        _menuButton.onClick.AddListener(() =>
-        {
-            GameEventBus.MenuButtonClicked();
-        });
-    }
-    private void UnsubscribeFromEvents()
-    {
-        GameEventBus.OnDistanceChanged -= GameEventBusOnDistanceChanged;
-        GameEventBus.OnPowerupPickedup -= GameEventBus_OnPowerupPickedup;
-        _menuButton?.onClick.RemoveAllListeners();
     }
     private void ShowDefaults()
     {

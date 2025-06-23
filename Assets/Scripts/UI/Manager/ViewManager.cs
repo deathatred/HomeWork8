@@ -39,7 +39,7 @@ public class ViewManager : MonoBehaviour
             canvas.enabled = false;
         }
         _views[id].enabled = true;
-        GameEventBus.CanvasChanged(id); 
+        GameEventBus.CanvasChange(id);
     }
     private void SubscribeToEvents()
     {
@@ -47,8 +47,31 @@ public class ViewManager : MonoBehaviour
         GameEventBus.OnStartGameButtonClicked += GameEventBusOnStartGameButtonClicked;
         GameEventBus.OnPlayerDead += GameEventBusOnPlayerDead;
         GameEventBus.OnRestartButtonClicked += GameEventBusOnRestartButtonClicked;
+        GameEventBus.OnBackButtonClicked += GameEventBusOnBackButtonClicked;
+        GameEventBus.OnSettingButtonClicked += GameEventBusOnSettingButtonClicked;
+    }
+    private void UnsubscribeFromEvents()
+    {
+        GameEventBus.OnMenuButtonClicked -= GameEventBusOnMenuButtonClicked;
+        GameEventBus.OnStartGameButtonClicked -= GameEventBusOnStartGameButtonClicked;
+        GameEventBus.OnPlayerDead -= GameEventBusOnPlayerDead;
+        GameEventBus.OnRestartButtonClicked -= GameEventBusOnRestartButtonClicked;
+        GameEventBus.OnBackButtonClicked -= GameEventBusOnBackButtonClicked;
+        GameEventBus.OnSettingButtonClicked -= GameEventBusOnSettingButtonClicked;
     }
 
+    private void GameEventBusOnSettingButtonClicked()
+    {
+        ChangeCanvas(3);
+    }
+
+    private void GameEventBusOnBackButtonClicked(BackButtonContext obj)
+    {
+        if (obj is BackButtonContext.Settings)
+        {
+            ChangeCanvas(1);
+        }
+    }
     private void GameEventBusOnRestartButtonClicked()
     {
         ViewManager._gameWasRestarted = true;
@@ -65,13 +88,7 @@ public class ViewManager : MonoBehaviour
         ChangeCanvas(0);
     }
 
-    private void UnsubscribeFromEvents()
-    {
-        GameEventBus.OnMenuButtonClicked -= GameEventBusOnMenuButtonClicked;
-        GameEventBus.OnStartGameButtonClicked -= GameEventBusOnStartGameButtonClicked;
-        GameEventBus.OnPlayerDead -= GameEventBusOnPlayerDead;
-        GameEventBus.OnRestartButtonClicked -= GameEventBusOnRestartButtonClicked;
-    }
+   
 
     private void GameEventBusOnMenuButtonClicked()
     {

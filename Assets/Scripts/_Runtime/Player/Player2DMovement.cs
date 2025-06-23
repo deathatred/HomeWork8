@@ -246,7 +246,6 @@ public class Player2DMovement : MonoBehaviour
     private void SignalWhenDistanceChanged()
     {
         int newDistance = CalculateDistance(transform.position.y, CharacterModel.Distance);
-        print(CharacterModel.Distance);
         if (newDistance != CharacterModel.Distance)
         {
             CharacterModel.Distance = newDistance;
