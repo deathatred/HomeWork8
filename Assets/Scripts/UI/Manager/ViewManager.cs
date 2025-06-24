@@ -49,7 +49,11 @@ public class ViewManager : MonoBehaviour
         GameEventBus.OnRestartButtonClicked += GameEventBusOnRestartButtonClicked;
         GameEventBus.OnBackButtonClicked += GameEventBusOnBackButtonClicked;
         GameEventBus.OnSettingButtonClicked += GameEventBusOnSettingButtonClicked;
+        GameEventBus.OnEscapePressed += GameEventBus_OnEscapePressed;
     }
+
+  
+
     private void UnsubscribeFromEvents()
     {
         GameEventBus.OnMenuButtonClicked -= GameEventBusOnMenuButtonClicked;
@@ -87,8 +91,11 @@ public class ViewManager : MonoBehaviour
     {
         ChangeCanvas(0);
     }
+    private void GameEventBus_OnEscapePressed()
+    {
+        ChangeCanvas(1);
+    }
 
-   
 
     private void GameEventBusOnMenuButtonClicked()
     {

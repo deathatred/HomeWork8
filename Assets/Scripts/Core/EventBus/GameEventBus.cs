@@ -14,11 +14,12 @@ public static class GameEventBus
     public static event Action OnSettingButtonClicked;
     public static event Action<int> OnCanvasChanged;
     public static event Action OnRebindStarted;
-    public static event Action OnRebindFinished;    
+    public static event Action OnRebindFinished;
     //In Game Events
     public static event Action OnPlayerDead;
     public static event Action<int> OnDistanceChanged;
     public static event Action<PowerupsSO> OnPowerupPickedup;
+    public static event Action OnEscapePressed;
 
 
     public static void ChangeDistance(int newDistance)
@@ -72,5 +73,9 @@ public static class GameEventBus
     public static void FinishRebind()
     {
         OnRebindFinished?.Invoke();
+    }
+    public static void PressEscape()
+    {
+        OnEscapePressed?.Invoke();  
     }
 }

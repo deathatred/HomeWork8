@@ -15,8 +15,6 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
     private PlayerInputActions _inputActions;
     private PlayerState _playerState;
 
-    public bool[] SpellPressedArray;
-
     private void Awake()
     {
         if (Instance == null)
@@ -34,7 +32,8 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
     {
         if (_inputActions != null)
         {
-            _inputActions.Enable();
+            _inputActions.PlayerActionMap.Enable();
+            _inputActions.PlayerLocomotionMap.Enable();
             _inputActions.PlayerLocomotionMap.SetCallbacks(this);
             _inputActions.PlayerActionMap.SetCallbacks(this);
         }
@@ -47,7 +46,10 @@ public class InputHandler : MonoBehaviour, PlayerInputActions.IPlayerLocomotionM
     {
         if (_inputActions != null)
         {
-            _inputActions.Disable();
+            _inputActions.PlayerActionMap.Disable();
+            _inputActions.PlayerLocomotionMap.Disable();
+            _inputActions.PlayerLocomotionMap.SetCallbacks(null);
+            _inputActions.PlayerActionMap.SetCallbacks(null);
         }
         else
         {
