@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerTriggers : MonoBehaviour
 {
+    [SerializeField] private GameObject _floatingtextObject;
     public static PlayerTriggers Instance { get; private set; }
     public event EventHandler OnPlayerHit;
     private readonly Dictionary<PowerupsSO, PowerupBase> _activePowerups = new();
@@ -44,6 +45,9 @@ public class PlayerTriggers : MonoBehaviour
                     }
                 }
             }
+            GameObject floatingText = Instantiate(_floatingtextObject, transform.position + Vector3.up,
+                Quaternion.identity);
+            floatingText.GetComponent<FloatingText>().Show(powerupSO);
         }
         if (collision.TryGetComponent<ProjectileBase>(out var projectile))
         {

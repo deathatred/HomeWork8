@@ -7,4 +7,5 @@ public class PowerupsSO : ScriptableObject
 {
     [SerializeField] public GameObject PowerupPrefab;
     [SerializeField] public Image PowerupIcon;
+    [SerializeField] public Sprite PowerupSprite;
 }

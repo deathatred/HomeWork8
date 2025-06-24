@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PowerupPrefab: {fileID: 3022791888133763705, guid: 98d7983a52639074da5d90bb869eac5d, type: 3}
   PowerupIcon: {fileID: 6276666553036627357, guid: 5b4367b39ae77e64b9b8d6049b06414c, type: 3}
+  PowerupSprite: {fileID: -9143368565634805773, guid: 833dc794d176cd049a0df893ced31d28, type: 3}
