@@ -62,6 +62,7 @@ public class ViewManager : MonoBehaviour
         GameEventBus.OnRestartButtonClicked -= GameEventBusOnRestartButtonClicked;
         GameEventBus.OnBackButtonClicked -= GameEventBusOnBackButtonClicked;
         GameEventBus.OnSettingButtonClicked -= GameEventBusOnSettingButtonClicked;
+        GameEventBus.OnEscapePressed -= GameEventBus_OnEscapePressed;
     }
 
     private void GameEventBusOnSettingButtonClicked()

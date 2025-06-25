@@ -139,6 +139,11 @@ public class Player2DMovement : MonoBehaviour
             if (verticalVelocity > epsilon)
             {
                 _playerState.SetCurrentMovementState(PlayerMovementState.Jumping);
+                if (verticalVelocity == 0)
+                {
+                    _playerState.SetCurrentMovementState(PlayerMovementState.Idle);
+                    TryDealDamageUnderPlayer();
+                }
                 return;
             }
             else if (verticalVelocity < -epsilon && !isSpinning)

@@ -29,6 +29,11 @@ public class MenuView : MonoBehaviour
         {
             GameEventBus.SettingButtonClick();
         });
+        _exitButtom.onClick.AddListener(() =>
+        {
+            print("quit");
+            Application.Quit();
+        });
         GameEventBus.OnStartGameButtonClicked += GameEventBusOnStartGameButtonClicked;
         GameEventBus.OnPlayerDead += GameEventBusOnPlayerDead;
     }
@@ -38,6 +43,7 @@ public class MenuView : MonoBehaviour
         _settingsButton.onClick.RemoveAllListeners(); 
         GameEventBus.OnStartGameButtonClicked -= GameEventBusOnStartGameButtonClicked;
         GameEventBus.OnPlayerDead -= GameEventBusOnPlayerDead;
+        _exitButtom.onClick.RemoveAllListeners();
     }
     private void GameEventBusOnStartGameButtonClicked()
     {

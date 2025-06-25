@@ -51,17 +51,20 @@ public class PlatformSpawner : MonoBehaviour
         }
         if (_target.position.y - _lastPlatformsDeletedOnPlayerPosition > _stepHeight * _stepsCountToDelete)
         {
-            var platformGroupToDelete = _spawnedPlatforms.Dequeue();
-
-            for (int i = 0; i < platformGroupToDelete.Length; i++)
+            if (_spawnedPlatforms.Count > 0)
             {
-                if (platformGroupToDelete[i] && platformGroupToDelete[i].gameObject)
-                {
-                    Destroy(platformGroupToDelete[i].gameObject);
-                }
-            }
+                var platformGroupToDelete = _spawnedPlatforms.Dequeue();
 
-            _lastPlatformsDeletedOnPlayerPosition += _stepHeight;
+                for (int i = 0; i < platformGroupToDelete.Length; i++)
+                {
+                    if (platformGroupToDelete[i] && platformGroupToDelete[i].gameObject)
+                    {
+                        Destroy(platformGroupToDelete[i].gameObject);
+                    }
+                }
+
+                _lastPlatformsDeletedOnPlayerPosition += _stepHeight;
+            }
         }
 
     }

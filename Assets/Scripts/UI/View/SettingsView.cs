@@ -10,8 +10,7 @@ public class SettingsView : MonoBehaviour
     [SerializeField] private Button _musicMinusButton;
     [SerializeField] private Image _RebindBackground;
 
-    private int _musicIndex;
-    private float _musicDefault = 0.5f;
+    private static int _musicIndex;
 
     private void OnEnable()
     {
@@ -70,9 +69,19 @@ public class SettingsView : MonoBehaviour
     }
     private void SetDefaults()
     {
-        int defaultMusicVolume = 5;
-        _musicSettingText.text = $"MUSIC: {defaultMusicVolume}";
-        _musicIndex = defaultMusicVolume;
+        if (!PlayerPrefs.HasKey("MusicVolume")) 
+        {
+            int musicDefault = 5;
+            _musicIndex = musicDefault;
+            _musicSettingText.text = $"MUSIC: {_musicIndex}";
+            
+        }
+        else
+        {
+            float saved = PlayerPrefs.GetFloat("MusicVolume");
+            _musicIndex = Mathf.RoundToInt(saved * 10);
+            _musicSettingText.text = $"MUSIC: {_musicIndex}";
+        }
     }
     private void GameEventBusOnRebindStarted()
     {

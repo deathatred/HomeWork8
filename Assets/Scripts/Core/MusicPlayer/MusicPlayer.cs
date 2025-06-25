@@ -5,8 +5,19 @@ public class MusicPlayer : MonoBehaviour
     private AudioSource _musicSource;
     private void Awake()
     {
-        //DontDestroyOnLoad(this);
-        _musicSource = GetComponent<AudioSource>();
+        _musicSource = GetComponent<AudioSource>();  
+        if (PlayerPrefs.HasKey("MusicVolume"))
+        {
+            float saved = PlayerPrefs.GetFloat("MusicVolume");
+            print(saved + "SAVED");
+            _musicSource.volume = saved;
+        }
+        else
+        {
+            float musicDefault = 0.5f;
+            _musicSource.volume = musicDefault;
+        }
+
     }
     private void OnEnable()
     {
@@ -21,6 +32,8 @@ public class MusicPlayer : MonoBehaviour
         if (_musicSource != null)
         {
             _musicSource.volume += 0.1f;
+            PlayerPrefs.SetFloat("MusicVolume", _musicSource.volume);
+            PlayerPrefs.Save();
         }
     }
     private void VolumeDown()
@@ -28,6 +41,8 @@ public class MusicPlayer : MonoBehaviour
         if (_musicSource != null)
         {
             _musicSource.volume -= 0.1f;
+            PlayerPrefs.SetFloat("MusicVolume", _musicSource.volume);
+            PlayerPrefs.Save();
         }
     }
     private void SubscribeToEvents()
