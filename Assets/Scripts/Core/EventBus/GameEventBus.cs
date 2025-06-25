@@ -1,5 +1,6 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
+using UnityEditor;
 using UnityEngine;
 
 public static class GameEventBus
@@ -15,6 +16,7 @@ public static class GameEventBus
     public static event Action<int> OnCanvasChanged;
     public static event Action OnRebindStarted;
     public static event Action OnRebindFinished;
+    public static event Action OnTutorialPressed;
     //In Game Events
     public static event Action OnPlayerDead;
     public static event Action<int> OnDistanceChanged;
@@ -58,9 +60,9 @@ public static class GameEventBus
     {
         OnMusicMinusButtonClicked?.Invoke();
     }
-    public static void BackButtonClick()
+    public static void BackButtonClick(BackButtonContext context)
     {
-        OnBackButtonClicked?.Invoke(BackButtonContext.Settings);
+        OnBackButtonClicked?.Invoke(context);
     }
     public static void SettingButtonClick()
     {
@@ -76,6 +78,10 @@ public static class GameEventBus
     }
     public static void PressEscape()
     {
-        OnEscapePressed?.Invoke();  
+        OnEscapePressed?.Invoke();
+    }
+    public static void TutorialMenuClick()
+    {
+        OnTutorialPressed?.Invoke();
     }
 }

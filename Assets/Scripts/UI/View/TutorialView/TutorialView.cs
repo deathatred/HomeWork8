@@ -1,16 +1,35 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialView : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private Button _platformsInfoButton;
+    [SerializeField] private Button _enemiesInfoButton;
+    [SerializeField] private Button _powerupsInfoButton;
+    [SerializeField] private Button _backButton;
+
+    private void OnEnable()
     {
-        
+        SubscribeToEvents();
+    }
+    private void OnDisable()
+    {
+        UnsubscribeFromEvents();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SubscribeToEvents()
     {
-        
+        _backButton.onClick.AddListener(() =>
+        {
+            print("CLICK");
+            GameEventBus.BackButtonClick(BackButtonContext.Tutorial);
+        });
     }
+    private void UnsubscribeFromEvents()
+    {
+        _backButton.onClick.RemoveAllListeners();
+    }
+
+   
 }

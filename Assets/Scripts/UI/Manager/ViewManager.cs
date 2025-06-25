@@ -50,10 +50,8 @@ public class ViewManager : MonoBehaviour
         GameEventBus.OnBackButtonClicked += GameEventBusOnBackButtonClicked;
         GameEventBus.OnSettingButtonClicked += GameEventBusOnSettingButtonClicked;
         GameEventBus.OnEscapePressed += GameEventBus_OnEscapePressed;
+        GameEventBus.OnTutorialPressed += GameEventBus_OnTutorialPressed;
     }
-
-  
-
     private void UnsubscribeFromEvents()
     {
         GameEventBus.OnMenuButtonClicked -= GameEventBusOnMenuButtonClicked;
@@ -63,8 +61,12 @@ public class ViewManager : MonoBehaviour
         GameEventBus.OnBackButtonClicked -= GameEventBusOnBackButtonClicked;
         GameEventBus.OnSettingButtonClicked -= GameEventBusOnSettingButtonClicked;
         GameEventBus.OnEscapePressed -= GameEventBus_OnEscapePressed;
+        GameEventBus.OnTutorialPressed -= GameEventBus_OnTutorialPressed;
     }
-
+    private void GameEventBus_OnTutorialPressed()
+    {
+        ChangeCanvas(4);
+    }
     private void GameEventBusOnSettingButtonClicked()
     {
         ChangeCanvas(3);
@@ -72,7 +74,7 @@ public class ViewManager : MonoBehaviour
 
     private void GameEventBusOnBackButtonClicked(BackButtonContext obj)
     {
-        if (obj is BackButtonContext.Settings)
+        if (obj is BackButtonContext.Settings || obj is BackButtonContext.Tutorial)
         {
             ChangeCanvas(1);
         }

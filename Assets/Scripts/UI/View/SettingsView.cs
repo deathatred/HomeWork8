@@ -52,7 +52,7 @@ public class SettingsView : MonoBehaviour
         });
         _backButton.onClick.AddListener(() =>
         {
-            GameEventBus.BackButtonClick();
+            GameEventBus.BackButtonClick(BackButtonContext.Settings);
         });
         GameEventBus.OnRebindStarted += GameEventBusOnRebindStarted;
         GameEventBus.OnRebindFinished += GameEventBusOnRebindFinished;
