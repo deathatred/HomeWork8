@@ -8,7 +8,8 @@ public class MenuView : MonoBehaviour
     [SerializeField] private Button _startGameButton;
     [SerializeField] private TextMeshProUGUI _startGameTitle;
     [SerializeField] private Button _settingsButton;
-    [SerializeField] private Button _exitButtom;
+    [SerializeField] private Button _exitButton;
+    [SerializeField] private Button _tutorialButton;
 
     private void OnEnable()
     {
@@ -22,14 +23,13 @@ public class MenuView : MonoBehaviour
     {
         _startGameButton.onClick.AddListener(() =>
         {
-
             GameEventBus.StartGameButtonClick();
         });
         _settingsButton.onClick.AddListener(() =>
         {
             GameEventBus.SettingButtonClick();
         });
-        _exitButtom.onClick.AddListener(() =>
+        _exitButton.onClick.AddListener(() =>
         {
             print("quit");
             Application.Quit();
@@ -43,7 +43,7 @@ public class MenuView : MonoBehaviour
         _settingsButton.onClick.RemoveAllListeners(); 
         GameEventBus.OnStartGameButtonClicked -= GameEventBusOnStartGameButtonClicked;
         GameEventBus.OnPlayerDead -= GameEventBusOnPlayerDead;
-        _exitButtom.onClick.RemoveAllListeners();
+        _exitButton.onClick.RemoveAllListeners();
     }
     private void GameEventBusOnStartGameButtonClicked()
     {

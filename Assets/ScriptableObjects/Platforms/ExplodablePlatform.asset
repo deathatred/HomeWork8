@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac98f01f58f57e4facdeece1696b06f, type: 3}
+  m_Name: ExplodablePlatform
+  m_EditorClassIdentifier: 
+  PlatformPrefab: {fileID: 2412220281670157967, guid: 3c5289d949d8c5e4cbe08f8abc4b9ebc, type: 3}
+  PlatformImage: {fileID: -4355272409397247203, guid: ef8312c515eee404ebaf58238a2a2500, type: 3}
+  PlatformName: Explodable Platform
+  PlatformAbout: Will explode in 2 seconds after standing on it P.S Explosion is
+    lethal
