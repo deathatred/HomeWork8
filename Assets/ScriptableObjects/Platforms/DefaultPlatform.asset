@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlatformPrefab: {fileID: 3828185808308607879, guid: 6d0f08f615aacee4092bc061ae7ce7ec, type: 3}
   PlatformImage: {fileID: 3310002292416464744, guid: 236da1b6667233043aec38a750fd8e2b, type: 3}
+  PlatformBackground: {fileID: -8900627138740598509, guid: 0ace7838dc962fc4bb3e7e8d85dfa69a, type: 3}
   PlatformName: Default Platform
   PlatformAbout: Just ordinary platform

@@ -8,6 +8,7 @@ public class TutorialView : MonoBehaviour
     [SerializeField] private Button _enemiesInfoButton;
     [SerializeField] private Button _powerupsInfoButton;
     [SerializeField] private Button _backButton;
+    [SerializeField] private RectTransform _platformScroll;
 
     private void OnEnable()
     {
@@ -20,6 +21,10 @@ public class TutorialView : MonoBehaviour
 
     private void SubscribeToEvents()
     {
+        _platformsInfoButton.onClick.AddListener(() =>
+        {
+            _platformScroll.gameObject.SetActive(true);
+        });
         _backButton.onClick.AddListener(() =>
         {
             print("CLICK");

@@ -17,6 +17,7 @@ public static class GameEventBus
     public static event Action OnRebindStarted;
     public static event Action OnRebindFinished;
     public static event Action OnTutorialPressed;
+    public static event Action OnPlatformInfoPressed;
     //In Game Events
     public static event Action OnPlayerDead;
     public static event Action<int> OnDistanceChanged;
@@ -83,5 +84,9 @@ public static class GameEventBus
     public static void TutorialMenuClick()
     {
         OnTutorialPressed?.Invoke();
+    }
+    public static void PlatformInfoClick()
+    {
+        OnPlatformInfoPressed?.Invoke();    
     }
 }

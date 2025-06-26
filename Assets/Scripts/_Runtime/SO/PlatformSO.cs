@@ -7,6 +7,7 @@ public class PlatformSO : ScriptableObject
 {
     [SerializeField] public GameObject PlatformPrefab;
     [SerializeField] public Sprite PlatformImage;
+    [SerializeField] public Sprite PlatformBackground;
     [SerializeField] public string PlatformName;
     [SerializeField] public string PlatformAbout;
 }
