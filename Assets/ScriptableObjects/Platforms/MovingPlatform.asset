@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlatformPrefab: {fileID: 4086900436370577423, guid: 597bbbebe67821741b599515cbbaf7fe, type: 3}
   PlatformImage: {fileID: -6519910902128367541, guid: 109584a696d40384dac64a42eb6e74fd, type: 3}
+  PlatformBackground: {fileID: 7107552793261037281, guid: f0a1936f15c32604482e34688d0d1d5f, type: 3}
   PlatformName: Moving Platform
   PlatformAbout: technical miracle, constanly moving vertically

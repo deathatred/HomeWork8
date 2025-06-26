@@ -725,7 +725,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1510}
+  m_SizeDelta: {x: 800, y: 1510}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5377027309430526951
 CanvasRenderer:
@@ -779,6 +779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _platformTitle: {fileID: 9055861287811060325}
   _platformImage: {fileID: 4239257299348521538}
+  _platformBackground: {fileID: 4446119512260495741}
   _platformHealth: {fileID: 7186443421314647065}
   _platformSpawnText: {fileID: 8971865634277534180}
   _platformAboutText: {fileID: 8830076453331876595}

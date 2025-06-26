@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlatformPrefab: {fileID: 8624100363253793863, guid: f2b52629e7f8a9343b88de923ddd0cfa, type: 3}
   PlatformImage: {fileID: 4871502181275585520, guid: 419a9772829b0434aba16efd76663084, type: 3}
+  PlatformBackground: {fileID: -3250152076002254932, guid: 13a1c79cd34f27e4facd1f6f69ff063c, type: 3}
   PlatformName: Magical Platform
   PlatformAbout: Only best frog wizards can summon it

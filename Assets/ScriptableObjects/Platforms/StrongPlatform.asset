@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlatformPrefab: {fileID: 4429464962589253027, guid: 693451f842a63af449548b7e084d14d6, type: 3}
   PlatformImage: {fileID: -6619111317931664985, guid: 028840be948cff44dadde87527d2ed13, type: 3}
+  PlatformBackground: {fileID: 7678028475620767446, guid: 3952516b4685d1c4b9ec44547d43fe0f, type: 3}
   PlatformName: Strong Platform
   PlatformAbout: Copper masterpiece, will stand one your landing, but no more than
     one!

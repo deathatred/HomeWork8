@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpawnEnemyAction : ActionBase
 {
     [SerializeField] private Transform _spawnEnemyLocation;
-    [SerializeField] private List<GameObject> _enemiesList;
+    [SerializeField] private EnemiesListSO _enemiesList;
     private GameObject _enemyGameObject;
     protected override void ExecuteInternal()
     {
@@ -13,8 +13,8 @@ public class SpawnEnemyAction : ActionBase
 
         if (Random.value < chance && !platform.GetHasSpawnedObject())
         {
-            int powerupsCount = _enemiesList.Count;
-            _enemyGameObject = Instantiate(_enemiesList[Random.Range(0, powerupsCount)],
+            int powerupsCount = _enemiesList.EnemiesList.Count;
+            _enemyGameObject = Instantiate(_enemiesList.EnemiesList[Random.Range(0, powerupsCount)].EnemyPrefab,
             _spawnEnemyLocation.position, Quaternion.identity, platform.transform);
             platform.SetHasSpawnedObject();
         }
@@ -22,5 +22,9 @@ public class SpawnEnemyAction : ActionBase
     private void OnDestroy()
     {
         Destroy( _enemyGameObject );
+    }
+    public EnemiesListSO GetEnemiesList()
+    {
+        return _enemiesList;
     }
 }

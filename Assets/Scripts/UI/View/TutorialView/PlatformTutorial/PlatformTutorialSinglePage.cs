@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class PlatformTutorialSinglePage : MonoBehaviour
 {
-    private PlatformSO _platformSO;
 
     [SerializeField] private TextMeshProUGUI _platformTitle;
     [SerializeField] private Image _platformImage;
+    [SerializeField] private Image _platformBackground;
     [SerializeField] private TextMeshProUGUI _platformHealth;
     [SerializeField] private TextMeshProUGUI _platformSpawnText;
     [SerializeField] private TextMeshProUGUI _platformAboutText;
@@ -19,6 +19,7 @@ public class PlatformTutorialSinglePage : MonoBehaviour
 
         _platformTitle.text = _platformSO.PlatformName;
         _platformImage.sprite = _platformSO.PlatformImage;
+        _platformBackground.sprite = _platformSO.PlatformBackground;
         _platformHealth.text = $"Health: {platform.Health}";
         _platformSpawnText.text = $"Spawns: {CheckWhatPlatformCanSpawn(platform)}";
         _platformAboutText.text = _platformSO.PlatformAbout;

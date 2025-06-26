@@ -356,8 +356,7 @@ MonoBehaviour:
   _executeOnStart: 1
   _executeOnlyOnce: 0
   _spawnEnemyLocation: {fileID: 3125364135425366757}
-  _enemiesList:
-  - {fileID: 4456424956822987222, guid: 561c6e2a9996f154999e125890b33367, type: 3}
+  _enemiesList: {fileID: 11400000, guid: 2631e147c07e89948a237be5bdfdce3f, type: 2}
 --- !u!1 &5575548550658959162
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlatformPrefab: {fileID: 2412220281670157967, guid: 3c5289d949d8c5e4cbe08f8abc4b9ebc, type: 3}
   PlatformImage: {fileID: -4355272409397247203, guid: ef8312c515eee404ebaf58238a2a2500, type: 3}
+  PlatformBackground: {fileID: -3751033765985623991, guid: a1e3028f3a6bc8342979c8cc2071dac6, type: 3}
   PlatformName: Explodable Platform
   PlatformAbout: Will explode in 2 seconds after standing on it P.S Explosion is
     lethal

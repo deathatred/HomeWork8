@@ -1,26 +1,40 @@
+using Mono.Cecil;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyTutorialSinglePage : MonoBehaviour
 {
-    //Enemy SO
-
+    [SerializeField] private PlatformListSO _platformList;
     [SerializeField] private TextMeshProUGUI _enemyTitle;
     [SerializeField] private Image _enemyImage;
     [SerializeField] private TextMeshProUGUI _enemySpawnText;
     [SerializeField] private TextMeshProUGUI _enemyAboutText;
 
-    public void Setup(/*Enemy so*/)
+    public void Setup(EnemySO enemy)
     {
-
-        _enemyTitle.text = null;
-        _enemyImage.sprite = null;
-        _enemySpawnText.text = null;
-        _enemyAboutText.text = null;
+        _enemyTitle.text = enemy.EnemyName;
+        _enemyImage.sprite = enemy.EnemyImage;
+        _enemySpawnText.text = $"Spawns on: {CheckWhatPlatformCanSpawn(enemy)}";
+        _enemyAboutText.text = enemy.EnemyAbout;
     }
-    private string CheckWhatPlatformCanSpawn(/*EnemySo*/)
+    private string CheckWhatPlatformCanSpawn(EnemySO enemy)
     {
-       return string.Empty;
+        string result = string.Empty;
+        foreach (PlatformSO platform in _platformList.PlatformList) 
+        {
+            print(platform.PlatformName);
+            if (platform.PlatformPrefab.TryGetComponent<SpawnEnemyAction>(out var spawn))
+            {
+                if (spawn.GetEnemiesList().EnemiesList.Contains(enemy))
+                {
+                    result += $" {platform.PlatformName}" ;
+                }
+            }
+        }
+        return result;
+
+
     }
 }

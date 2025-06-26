@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TutorialPlatformScrollView : MonoBehaviour
+public class TutorialEnemyScrollView : MonoBehaviour
 {
     [SerializeField] private GameObject _content;
-    [SerializeField] private PlatformListSO _platformListSO;
-    [SerializeField] private GameObject _singlePlatformTutorialPage;
+    [SerializeField] private EnemiesListSO _enemiesListSO;
+    [SerializeField] private GameObject _singleEnemyTutorialPage;
     [SerializeField] private Button _backButton;
     private void Awake()
     {
@@ -34,11 +34,11 @@ public class TutorialPlatformScrollView : MonoBehaviour
 
     private void Setup()
     {
-        foreach (var platform in _platformListSO.PlatformList)
+        foreach (var enemy in _enemiesListSO.EnemiesList)
         {
-            GameObject pageGameObject = Instantiate(_singlePlatformTutorialPage, _content.transform);
-            PlatformTutorialSinglePage page = pageGameObject.GetComponent<PlatformTutorialSinglePage>();
-            page.Setup(platform);
+            GameObject pageGameObject = Instantiate(_singleEnemyTutorialPage, _content.transform);
+            EnemyTutorialSinglePage page = pageGameObject.GetComponent<EnemyTutorialSinglePage>();
+            page.Setup(enemy);
         }
     }
 }
