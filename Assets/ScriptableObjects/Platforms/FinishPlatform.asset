@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlatformPrefab: {fileID: 564785802144298503, guid: 8f85b77fd1f5fec4fbd6f29f8d0134fb, type: 3}
   PlatformImage: {fileID: 768539965427458729, guid: 9803839bdcec8f8498e4569d2a87cfda, type: 3}
+  PlatformBackground: {fileID: -8900627138740598509, guid: 0ace7838dc962fc4bb3e7e8d85dfa69a, type: 3}
   PlatformName: Finish Platform
   PlatformAbout: If you are here, you won!
