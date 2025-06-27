@@ -8,7 +8,7 @@ public class SettingsView : MonoBehaviour
     [SerializeField] private Button _backButton;
     [SerializeField] private Button _musicPlusButton;
     [SerializeField] private Button _musicMinusButton;
-    [SerializeField] private Image _RebindBackground;
+    [SerializeField] private Image _rebindBackground;
 
     private static int _musicIndex;
 
@@ -85,11 +85,11 @@ public class SettingsView : MonoBehaviour
     }
     private void GameEventBusOnRebindStarted()
     {
-        _RebindBackground.gameObject.SetActive(true);
+        _rebindBackground.gameObject.SetActive(true);
     }
     private void GameEventBusOnRebindFinished()
     {
-        _RebindBackground.gameObject.SetActive(false);
+        _rebindBackground.gameObject.SetActive(false);
     }
 
 }

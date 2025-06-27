@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -5,7 +7,6 @@ using UnityEngine.UI;
 
 public class PlatformTutorialSinglePage : MonoBehaviour
 {
-
     [SerializeField] private TextMeshProUGUI _platformTitle;
     [SerializeField] private Image _platformImage;
     [SerializeField] private Image _platformBackground;
@@ -13,34 +14,31 @@ public class PlatformTutorialSinglePage : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _platformSpawnText;
     [SerializeField] private TextMeshProUGUI _platformAboutText;
 
-    public void Setup(PlatformSO _platformSO)
+    public void Setup(PlatformSO platformSO)
     {
-        _platformSO.PlatformPrefab.TryGetComponent<Platform>(out var platform);
+        if (!platformSO.PlatformPrefab.TryGetComponent<Platform>(out var platform))
+        {
+            Debug.LogError($"Platform component not found on prefab: {platformSO.PlatformPrefab.name}");
+            return;
+        }
 
-        _platformTitle.text = _platformSO.PlatformName;
-        _platformImage.sprite = _platformSO.PlatformImage;
-        _platformBackground.sprite = _platformSO.PlatformBackground;
+        _platformTitle.text = platformSO.PlatformName;
+        _platformImage.sprite = platformSO.PlatformImage;
+        _platformBackground.sprite = platformSO.PlatformBackground;
         _platformHealth.text = $"Health: {platform.Health}";
-        _platformSpawnText.text = $"Spawns: {CheckWhatPlatformCanSpawn(platform)}";
-        _platformAboutText.text = _platformSO.PlatformAbout;
+        _platformSpawnText.text = $"Spawns: {GetPlatformSpawnInfo(platform)}";
+        _platformAboutText.text = platformSO.PlatformAbout;
     }
-    private string CheckWhatPlatformCanSpawn(Platform platform)
+    private string GetPlatformSpawnInfo(Platform platform)
     {
-        string result = string.Empty;
-        if (platform.TryGetComponent<SpawnEnemyAction>(out _))
-        {
-            result += "enemies";
-        }
-        if (platform.TryGetComponent<SpawnPowerUpAction>(out _))
-        {
-            result += ", powerups";
-        }
+        List<string> spawnables = new();
 
-        if (string.IsNullOrEmpty(result))
-        {
-            return "nothing";
-        }
-        else 
-        return result;
+        if (platform.TryGetComponent<SpawnEnemyAction>(out _))
+            spawnables.Add("enemies");
+
+        if (platform.TryGetComponent<SpawnPowerUpAction>(out _))
+            spawnables.Add("powerups");
+
+        return spawnables.Count > 0 ? string.Join(", ", spawnables) : "nothing";
     }
 }

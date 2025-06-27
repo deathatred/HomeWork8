@@ -82,7 +82,6 @@ public class ViewManager : MonoBehaviour
     private void GameEventBusOnRestartButtonClicked()
     {
         ViewManager._gameWasRestarted = true;
-        print("HERE IM GAE");
     }
 
     private void GameEventBusOnPlayerDead()

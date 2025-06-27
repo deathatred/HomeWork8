@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 4456424956822987222, guid: 561c6e2a9996f154999e125890b33367, type: 3}
   EnemyImage: {fileID: 21300000, guid: 282fa6659f7eabb4f88d7cd347ae7723, type: 3}
-  EnemyBackground: {fileID: 0}
+  EnemyBackground: {fileID: 8271491533661965921, guid: 7eb930a139e67b04299c9844d53c7dd2, type: 3}
   EnemyName: Angry Totem
   EnemyAbout: is constanly Attacking with poisonous darts

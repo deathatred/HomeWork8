@@ -779,6 +779,7 @@ MonoBehaviour:
   _platformList: {fileID: 11400000, guid: f32124287038eab4ba29871a1c9bcd20, type: 2}
   _enemyTitle: {fileID: 9055861287811060325}
   _enemyImage: {fileID: 4239257299348521538}
+  _enemyBackground: {fileID: 4446119512260495741}
   _enemySpawnText: {fileID: 8971865634277534180}
   _enemyAboutText: {fileID: 8830076453331876595}
 --- !u!1 &7317050245061160062
@@ -813,10 +814,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8801901606148413699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 178.4, y: -95}
-  m_SizeDelta: {x: 296.8, y: 110}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 173.5639}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6271479209770679902
 CanvasRenderer:
@@ -873,15 +874,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 38
+  m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 17
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -911,7 +912,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 23.850023, z: 0, w: -68.14302}
+  m_margin: {x: 0, y: 54.27446, z: 0.000030517578, w: -3.4911346}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
