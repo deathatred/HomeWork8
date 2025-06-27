@@ -31,7 +31,6 @@ public class TutorialView : MonoBehaviour
         });
         _backButton.onClick.AddListener(() =>
         {
-            print("CLICK");
             GameEventBus.BackButtonClick(BackButtonContext.Tutorial);
         });
     }
