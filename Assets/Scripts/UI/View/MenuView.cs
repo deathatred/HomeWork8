@@ -21,34 +21,21 @@ public class MenuView : MonoBehaviour
     }
     private void SubscribeToEvents()
     {
-        _startGameButton.onClick.AddListener(() =>
-        {
-            GameEventBus.StartGameButtonClick();
-        });
-        _settingsButton.onClick.AddListener(() =>
-        {
-            GameEventBus.SettingButtonClick();
-        });
-        _exitButton.onClick.AddListener(() =>
-        {
-            print("quit");
-            Application.Quit();
-        });
-        _tutorialButton.onClick.AddListener(() =>
-        {
-            GameEventBus.TutorialMenuClick();
-        });
+        _startGameButton.onClick.AddListener(StartButtonClick);
+        _settingsButton.onClick.AddListener(SettingsButtonClick);
+        _exitButton.onClick.AddListener(ExitButtonClick);
+        _tutorialButton.onClick.AddListener(TutorialButtonClick);
         GameEventBus.OnStartGameButtonClicked += GameEventBusOnStartGameButtonClicked;
         GameEventBus.OnPlayerDead += GameEventBusOnPlayerDead;
     }
     private void UnsubscribeFromEvents()
     {
-        _startGameButton.onClick.RemoveAllListeners();
-        _settingsButton.onClick.RemoveAllListeners(); 
+        _startGameButton.onClick.RemoveListener(StartButtonClick);
+        _settingsButton.onClick.RemoveListener(SettingsButtonClick);
+        _exitButton.onClick.RemoveListener(ExitButtonClick);
+        _tutorialButton.onClick.RemoveListener(TutorialButtonClick);
         GameEventBus.OnStartGameButtonClicked -= GameEventBusOnStartGameButtonClicked;
-        GameEventBus.OnPlayerDead -= GameEventBusOnPlayerDead;
-        _exitButton.onClick.RemoveAllListeners();
-        _tutorialButton.onClick.RemoveAllListeners();
+        GameEventBus.OnPlayerDead -= GameEventBusOnPlayerDead;   
     }
     private void GameEventBusOnStartGameButtonClicked()
     {
@@ -58,5 +45,21 @@ public class MenuView : MonoBehaviour
     private void GameEventBusOnPlayerDead()
     {
         _startGameTitle.text = "Start";
+    }
+    private void StartButtonClick()
+    {
+        GameEventBus.StartGameButtonClick();
+    }
+    private void SettingsButtonClick()
+    {
+        GameEventBus.SettingButtonClick();
+    }
+    private void ExitButtonClick()
+    {
+        print("quit and add event here");
+    }
+    private void TutorialButtonClick()
+    {
+        GameEventBus.TutorialMenuClick();
     }
 }

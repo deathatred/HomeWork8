@@ -3,12 +3,14 @@ using UnityEngine;
 public class MusicPlayer : MonoBehaviour
 {
     private AudioSource _musicSource;
+
+    private const string MUSIC_VOLUME_KEY = "MusicVolume";
     private void Awake()
     {
         _musicSource = GetComponent<AudioSource>();  
-        if (PlayerPrefs.HasKey("MusicVolume"))
+        if (PlayerPrefs.HasKey(MUSIC_VOLUME_KEY))
         {
-            float saved = PlayerPrefs.GetFloat("MusicVolume");
+            float saved = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY);
             print(saved + "SAVED");
             _musicSource.volume = saved;
         }
@@ -32,7 +34,7 @@ public class MusicPlayer : MonoBehaviour
         if (_musicSource != null)
         {
             _musicSource.volume += 0.1f;
-            PlayerPrefs.SetFloat("MusicVolume", _musicSource.volume);
+            PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, _musicSource.volume);
             PlayerPrefs.Save();
         }
     }
@@ -41,7 +43,7 @@ public class MusicPlayer : MonoBehaviour
         if (_musicSource != null)
         {
             _musicSource.volume -= 0.1f;
-            PlayerPrefs.SetFloat("MusicVolume", _musicSource.volume);
+            PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, _musicSource.volume);
             PlayerPrefs.Save();
         }
     }

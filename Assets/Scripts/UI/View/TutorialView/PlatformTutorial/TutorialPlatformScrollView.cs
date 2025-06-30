@@ -21,17 +21,12 @@ public class TutorialPlatformScrollView : MonoBehaviour
     }
     private void SubscribeToEvents()
     {
-        _backButton.onClick.AddListener(() =>
-        {
-            gameObject.SetActive(false);
-        });
+        _backButton.onClick.AddListener(Hide);
     }
     private void UnsubscribeFromEvents()
     {
-        _backButton.onClick.RemoveAllListeners();
+        _backButton.onClick.RemoveListener(Hide);
     }
-
-
     private void Setup()
     {
         foreach (var platform in _platformListSO.PlatformList)
@@ -40,5 +35,9 @@ public class TutorialPlatformScrollView : MonoBehaviour
             PlatformTutorialSinglePage page = pageGameObject.GetComponent<PlatformTutorialSinglePage>();
             page.Setup(platform);
         }
+    }
+    private void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }

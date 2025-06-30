@@ -127,7 +127,7 @@ public class RebindUI : MonoBehaviour
     }
     private void UnsubscribeFromEvents()
     {
-        _rebindButton.onClick.RemoveAllListeners();
+        _rebindButton.onClick.RemoveListener(StartRebind);
     }
 
 }

@@ -35,6 +35,8 @@ public static class GameEventBus
     }
     public static void MenuButtonClick()
     {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+    UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         OnMenuButtonClicked?.Invoke();
     }
     public static void StartGameButtonClick()
@@ -51,6 +53,8 @@ public static class GameEventBus
     }
     public static void RestartClick()
     {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+    UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         OnRestartButtonClicked?.Invoke();
     }
     public static void MusicPlusButtonClick()
@@ -87,6 +91,6 @@ public static class GameEventBus
     }
     public static void PlatformInfoClick()
     {
-        OnPlatformInfoPressed?.Invoke();    
+        OnPlatformInfoPressed?.Invoke();
     }
 }

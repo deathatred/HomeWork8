@@ -10,8 +10,6 @@ public class GameOverMenuView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _bestDistanceText;
     [SerializeField] private Button _menuButton;
     [SerializeField] private Button _restartButton;
-
-
     private void OnEnable()
     {
         SetBestDistanceText();
@@ -27,28 +25,26 @@ public class GameOverMenuView : MonoBehaviour
     }
     private void SubscribeToEvents()
     {
-        _menuButton.onClick.AddListener(() =>
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(
-     UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-            GameEventBus.MenuButtonClick();
-        });
-        _restartButton.onClick.AddListener(() =>
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(
-      UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-            GameEventBus.RestartClick();
-        });
+        _menuButton.onClick.AddListener(MenuButtonClick);
+        _restartButton.onClick.AddListener(RestartClick);
         GameEventBus.OnDistanceChanged += GameEventBusOnDistanceChanged;
     }
     private void UnsubscribeFromEvents()
     {
-        _menuButton.onClick.RemoveAllListeners();
-        _restartButton?.onClick.RemoveAllListeners();
+        _menuButton.onClick.RemoveListener(MenuButtonClick);
+        _restartButton?.onClick.RemoveListener(RestartClick);
         GameEventBus.OnDistanceChanged -= GameEventBusOnDistanceChanged;
     }
-    private void GameEventBusOnDistanceChanged(int obj)
+    private void GameEventBusOnDistanceChanged(int amountOfDistance)
     {
         SetBestDistanceText();
+    }
+    private void MenuButtonClick()
+    {
+        GameEventBus.MenuButtonClick();
+    }
+    private void RestartClick()
+    {
+        GameEventBus.RestartClick();
     }
 }

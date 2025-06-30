@@ -21,14 +21,11 @@ public class TutorialEnemyScrollView : MonoBehaviour
     }
     private void SubscribeToEvents()
     {
-        _backButton.onClick.AddListener(() =>
-        {
-            gameObject.SetActive(false);
-        });
+        _backButton.onClick.AddListener(Hide);
     }
     private void UnsubscribeFromEvents()
     {
-        _backButton.onClick.RemoveAllListeners();
+        _backButton.onClick.RemoveListener(Hide);
     }
 
 
@@ -40,5 +37,9 @@ public class TutorialEnemyScrollView : MonoBehaviour
             EnemyTutorialSinglePage page = pageGameObject.GetComponent<EnemyTutorialSinglePage>();
             page.Setup(enemy);
         }
+    }
+    private void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }

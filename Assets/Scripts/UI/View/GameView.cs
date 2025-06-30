@@ -9,9 +9,6 @@ public class GameView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _distanceToFinishText;
     [SerializeField] private TextMeshProUGUI _powerupsCollectedText;
     [SerializeField] private Button _menuButton;
-
-
-
     private void OnEnable()
     {
         SubscribeToEvents();
@@ -24,25 +21,17 @@ public class GameView : MonoBehaviour
     {
         UnsubscribeFromEvents();
     }
-
-
- 
     private void SubscribeToEvents()
     {
         GameEventBus.OnDistanceChanged += GameEventBusOnDistanceChanged;
         GameEventBus.OnPowerupPickedup += GameEventBus_OnPowerupPickedup;
-        _menuButton.onClick.AddListener(() =>
-        {
-            GameEventBus.MenuButtonClick();
-        });
+        _menuButton.onClick.AddListener(MenuButtonClick);
     }
-
-
     private void UnsubscribeFromEvents()
     {
         GameEventBus.OnDistanceChanged -= GameEventBusOnDistanceChanged;
         GameEventBus.OnPowerupPickedup -= GameEventBus_OnPowerupPickedup;
-        _menuButton?.onClick.RemoveAllListeners();
+        _menuButton?.onClick.RemoveListener(MenuButtonClick);
     }
     private void GameEventBus_OnPowerupPickedup(PowerupsSO obj)
     {
@@ -58,5 +47,9 @@ public class GameView : MonoBehaviour
     {
         _distanceToFinishText.text = $"Distance: {0}";
         _powerupsCollectedText.text = $"Powerups Collected: {0}";
+    }
+    private void MenuButtonClick()
+    {
+        GameEventBus.MenuButtonClick();
     }
 }
